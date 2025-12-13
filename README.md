@@ -18,4 +18,24 @@
 - `Bean` – объект со всеми необходимыми зависимостями, который **был создан** `IoC Container` (`Controller, Service, Repository`)
 - Кроме `Bean`, в `Spring` приложении есть `POJO - dto, entity`. Не содержат логики
 - `IoC Container` реализует `BeanFactory, ApplicationContext`
+- Есть разные `IoC` контейнеры. Для xml-конфигурации один, (`ClassPathXmlApplicationContext`), для других - другие
+- Бины в контексте хранятся как `Map<String, Object>`, то есть id String(!). генерится по разному, как например скажем
 ![img.png](img.png)
+
+# 2 XML-based Configuration
+## 2.1 XML-based Configuration
+- Методы `BeanFactory`
+![img_1.png](img_1.png)
+
+- Используется в основном реализация `ApplicationContext`
+- Для xml - `ClassPathApplicationContext`, передаем в него адрес файла с бинами xml
+- получить бин: `context.getBean(class)`, `context.getBean(String id/alias)` (вернет `object`), `context.getBean(id, class)` - конкретный бин класса
+- если не указать `id`, в мапе бинов `ioc` `id` будет `имя класса#номер`
+- если не указать `id/name` и сделать `getBean(class)`, то будет `exception`
+- вызывается конструктор без параметров (рефлексия)
+![img_3.png](img_3.png)
+
+## 2.2 Constructor injection
+- Можно указать name - имя аргумента, тип - для перегруженных конструкторов
+
+![img_4.png](img_4.png)
