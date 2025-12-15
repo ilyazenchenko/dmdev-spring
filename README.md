@@ -20,12 +20,12 @@
 - `IoC Container` реализует `BeanFactory, ApplicationContext`
 - Есть разные `IoC` контейнеры. Для xml-конфигурации один, (`ClassPathXmlApplicationContext`), для других - другие
 - Бины в контексте хранятся как `Map<String, Object>`, то есть id String(!). генерится по разному, как например скажем
-![img.png](img.png)
+![img.png](imgs/p2/img.png)
 
 # 2 XML-based Configuration
 ## 2.1 XML-based Configuration
 - Методы `BeanFactory`
-![img_1.png](img_1.png)
+![img_1.png](imgs/p2/img_1.png)
 
 - Используется в основном реализация `ApplicationContext`
 - Для xml - `ClassPathApplicationContext`, передаем в него адрес файла с бинами xml
@@ -33,28 +33,28 @@
 - если не указать `id`, в мапе бинов `ioc` `id` будет `имя класса#номер`
 - если не указать `id/name` и сделать `getBean(class)`, то будет `exception`
 - вызывается конструктор без параметров (рефлексия)
-![img_3.png](img_3.png)
+![img_3.png](imgs/p2/img_3.png)
 
 ## 2.2 Constructor injection
 - Можно указать name - имя аргумента, тип - для перегруженных конструкторов
 
-![img_4.png](img_4.png)
+![img_4.png](imgs/p2/img_4.png)
 
 ## 2.3 Factory Method Injection
 - Чтобы ссылаться на бин при создании бинов, нужно указывать не value а ref
 - вместо конструкторов при создании бина можно использовать Фабричный метод:
 
-![img_5.png](img_5.png)
+![img_5.png](imgs/p2/img_5.png)
 
 ## 2.4 Property Injection
 - Можно внедрять с помощью сеттеров, **но есть минусы: поле должно быть не final и возоможны циклические зависимости**
 - Вот как в xml:
 
-![img_6.png](img_6.png)
+![img_6.png](imgs/p2/img_6.png)
 
 - Жизненный цикл бина:
 
-![img_7.png](img_7.png)
+![img_7.png](imgs/p2/img_7.png)
 
 - Мы даем `definitions` - метаинфу
 - `контейер`:
@@ -64,14 +64,14 @@
   - создает
 
 ## 2.5 Bean Scopes
-![img_8.png](img_8.png)
+![img_8.png](imgs/p2/img_8.png)
 
 - основные (не считая `web`): `singleton` и `prototype`
 - для `prototype` `IoC` при каждом запросе прогоняет полностью жизненный цикл бина и **выплевывает** его, не запоминая
 
 ## 2.6 Lifecycle Callbacks
 - Можно добавлять `PostContruct/PreDestroy` методы, **лучше использовать аннотации**
-![img_9.png](img_9.png)
+![img_9.png](imgs/p2/img_9.png)
 
 > PreDestroy методы вызываются при закрытии контекста
 > 
@@ -80,13 +80,13 @@
 ## 2.7 properties файлы
 - источник данных для приложения. благодаря им не нужно каждый раз перекомпилить
 
-![img_10.png](img_10.png)
+![img_10.png](imgs/p2/img_10.png)
 - можно использовать в xml ))
 
 ## 2.8 BeanFactoryPostProcessor
 - Всякие el-выражения для properties и т п рассчитывает BeanFactoryPostProcessor
 
-![img_11.png](img_11.png)
+![img_11.png](imgs/p2/img_11.png)
 
 ## 2.9 Custom BeanFactoryPostProcessor
 - Можно реализовать свои BeanFactoryPostProcessor. Для этого реализовать в них BeanFactoryPostProcessor
