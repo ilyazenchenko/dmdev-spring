@@ -68,3 +68,26 @@
 
 - основные (не считая `web`): `singleton` и `prototype`
 - для `prototype` `IoC` при каждом запросе прогоняет полностью жизненный цикл бина и **выплевывает** его, не запоминая
+
+## 2.6 Lifecycle Callbacks
+- Можно добавлять `PostContruct/PreDestroy` методы, **лучше использовать аннотации**
+![img_9.png](img_9.png)
+
+> PreDestroy методы вызываются при закрытии контекста
+> 
+> ! У Контекста (= `IoC-контейнера`) на прототипы нет ссылки! он ее выплюнул, у прототипов PreDestroy не вызываются
+
+## 2.7 properties файлы
+- источник данных для приложения. благодаря им не нужно каждый раз перекомпилить
+
+![img_10.png](img_10.png)
+- можно использовать в xml ))
+
+## 2.8 BeanFactoryPostProcessor
+- Всякие el-выражения для properties и т п рассчитывает BeanFactoryPostProcessor
+
+![img_11.png](img_11.png)
+
+## 2.9 Custom BeanFactoryPostProcessor
+- Можно реализовать свои BeanFactoryPostProcessor. Для этого реализовать в них BeanFactoryPostProcessor
+- Можно настраивать порядос помощью implements Ordered getOrder или implements PriorityOrdered
