@@ -104,3 +104,88 @@
 ![img_1.png](img_1.png)
 
 > `BeanFactoryPostProcessor` уже знаем, а вот `BeanPostProcessor` - новый этап `Lifecycle`
+
+## 3.2 BeanPostProcessor
+
+- `BeanPostProcessor` - это особенные бины, которые участвуют в жизненном цикле бинов и занимаются их конфигураций (наподобие `BeanFacotryPostProcessor`, только для Beans, а не `Bean Definitions`).
+- ! `BeanFactoryPostProcessor` вызывается для контекста 1 раз, а `BeanPostProcessor` - для каждого бина
+
+![img_2.png](img_2.png)
+
+- `Aware` интерфейсы - помогают инжектить в бин-пост процессоры, например, контекст. Имеют сеттеры, нужно их реализовать
+- Порядок инициализации в `контексте` (= `IoC` контейнере):
+1. `AwareBeanPostProcessors` – чтобы инжектить зависимости в сами пост процессоры
+2. `BeanPostProcessors` – чтобы обрабатывать бины
+3. `Beans`
+
+## 3.3 Свой BeanPostProcessor
+
+> 1 Сделали свою аннотацию `InjectBean`
+> 
+> 2 В `PostProcessor` берем все филды, и для этой аннотации ищем в контексте бин этого типа, инжектим, конец
+> 
+> 3 ! Внедряем в пост процессор `application context` с помощью `ApplicationContextAware` и `set` метода
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.FIELD)
+public @interface InjectBean {
+}
+
+```
+```java
+public class Repository {
+
+    @InjectBean
+    private ConnectionPool connectionPool;
+
+    @PostConstruct
+    public void init() {
+        System.out.println("ConnectionPool: " + connectionPool);
+    }
+
+}
+```
+```java
+public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
+
+    private ApplicationContext applicationContext;
+
+    @Override
+    public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
+        Arrays.stream(bean.getClass().getDeclaredFields())
+                .filter(field -> field.isAnnotationPresent(InjectBean.class))
+                .forEach(field -> {
+                    field.setAccessible(true);
+                    ReflectionUtils.setField(field, bean, applicationContext.getBean(field.getType()));
+                });
+        return bean;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+}
+```
+
+## 3.4 Свой BeanPostProcessor 2
+
+- Есть методы:
+
+```java
+     Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException; // до колбека PostConstruct
+// и
+     Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException; // после колбека PostConstruct
+```
+
+> и если мы привносим какую-то сквозную функциональность с помощью Proxy, то нужно это делать в `postProcessAfterInitialization`, так как прокси вернет другой класс и могут быть ошибки
+
+## 3.5 @Autowired, @Resource, @Value
+> `@Resource` то же самое что `@Autowired`, просто чтобы поддерживать спецификацию `JavaEE`, лучше использовать `@Autowired`
+> 
+> `@Autowired` можно в поле, сеттере, конструкторе
+> 
+> Если несколько бинов - использовать `@Qualifier(beanId)` **или** **просто назвать поле/аргумент сеттера как** `id` бина
+> 
+> `@Value(${spring.el})` - подставить из пропертей
