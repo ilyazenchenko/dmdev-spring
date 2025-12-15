@@ -91,3 +91,16 @@
 ## 2.9 Custom BeanFactoryPostProcessor
 - Можно реализовать свои BeanFactoryPostProcessor. Для этого реализовать в них BeanFactoryPostProcessor
 - Можно настраивать порядос помощью implements Ordered getOrder или implements PriorityOrdered
+
+# 3 Annotation-based configuration
+
+## 3.1 Annotation-based Configuration
+- В xml можно добавить
+
+![img.png](img.png)
+
+- Он добавит необходимые бины для аннотаций и др., а именно:
+
+![img_1.png](img_1.png)
+
+> `BeanFactoryPostProcessor` уже знаем, а вот `BeanPostProcessor` - новый этап `Lifecycle`
