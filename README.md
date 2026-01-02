@@ -232,7 +232,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 ## 4.1 Java-based Configuration
 
 Пример кастомных фильтров в аннотации:
-![img.png](img.png)
+![img.png](imgs/p4-5/img.png)
 
 Создать `ApplicationConfiguration` контекст:
 ```java
@@ -265,7 +265,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 ## 4.4 @Bean. Часть 2
 - Можно внедрять бины прямо как вызов метода, как в `userRepository3`:
 
-![img_1.png](img_1.png)
+![img_1.png](imgs/p4-5/img_1.png)
 
 > У pool3 не указан **`scope`**, т. е. он синглтон, и **`pool3()`** будет возвращать
 > **один и тот же бин!** 
@@ -275,15 +275,15 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 Аннотацию `@Profile` можно ставить над `@Bean` или над `@Component`. В ней указывать профили.
 - Поддерживает логические выражения:
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/p4-5/img_2.png)
 
 # 5. EventListeners
 
 ## 5.1 EventListeners. 1,2
 
 В Spring можно делать слушатели событий:
-![img_3.png](img_3.png)
+![img_3.png](imgs/p4-5/img_3.png)
 
-![img_4.png](img_4.png)
+![img_4.png](imgs/p4-5/img_4.png)
 
-![img_5.png](img_5.png)
+![img_5.png](imgs/p4-5/img_5.png)
