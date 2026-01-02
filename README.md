@@ -97,11 +97,11 @@
 ## 3.1 Annotation-based Configuration
 - В xml можно добавить
 
-![img.png](img.png)
+![img.png](imgs/p3/img.png)
 
 - Он добавит необходимые бины для аннотаций и др., а именно:
 
-![img_1.png](img_1.png)
+![img_1.png](imgs/p3/img_1.png)
 
 > `BeanFactoryPostProcessor` уже знаем, а вот `BeanPostProcessor` - новый этап `Lifecycle`
 
@@ -110,7 +110,7 @@
 - `BeanPostProcessor` - это особенные бины, которые участвуют в жизненном цикле бинов и занимаются их конфигураций (наподобие `BeanFacotryPostProcessor`, только для Beans, а не `Bean Definitions`).
 - ! `BeanFactoryPostProcessor` вызывается для контекста 1 раз, а `BeanPostProcessor` - для каждого бина
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/p3/img_2.png)
 
 - `Aware` интерфейсы - помогают инжектить в бин-пост процессоры, например, контекст. Имеют сеттеры, нужно их реализовать
 - Порядок инициализации в `контексте` (= `IoC` контейнере):
@@ -206,13 +206,13 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 ## 3.7 Bean Definition Readers
 - Они читают xml/аннотации и строят контекст
 
-![img_3.png](img_3.png)
+![img_3.png](imgs/p3/img_3.png)
 
 
 ## 3.8 TypeFilters
 
-<img src="img_8.png" width="750">
-<img src="img_4.png" width="750">
+<img src="imgs/p3/img_8.png" width="750">
+<img src="imgs/p3/img_4.png" width="750">
 
 Так Spring понимает, какие классы - бины. По умолчанию - `annotation`. То есть `@Component`, и т п. Можно настраивать в аннотации `@ComponentScan`: например `regex` - все, оканчивающиеся на Bean и т п.
 
@@ -224,4 +224,4 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
 Для совместимости Spring поддерживает аннотации JSR:
 
-![img_9.png](img_9.png)
+![img_9.png](imgs/p3/img_9.png)
