@@ -214,7 +214,8 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 <img src="imgs/p3/img_8.png" width="750">
 <img src="imgs/p3/img_4.png" width="750">
 
-Так Spring понимает, какие классы - бины. По умолчанию - `annotation`. То есть `@Component`, и т п. Можно настраивать в аннотации `@ComponentScan`: например `regex` - все, оканчивающиеся на Bean и т п.
+Так Spring понимает, какие классы - бины. По умолчанию - `annotation`. То есть `@Component`, и т п. 
+Можно настраивать в аннотации `@ComponentScan`: например `regex` - все, оканчивающиеся на Bean и т п.
 
 ## 3.9 @Scope
 
@@ -233,25 +234,45 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 Пример кастомных фильтров в аннотации:
 ![img.png](img.png)
 
-Создать ApplicationConfiguration (Java) контекст:
+Создать `ApplicationConfiguration` контекст:
 ```java
 ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
 ```
 
 Что под капотом:
-у AnnotationConfigApplicationContext есть поля reader, scanner, и в конструкторе для всех бинов вызывается метод register()
+у `AnnotationConfigApplicationContext` есть поля `reader`, `scanner`, и в конструкторе для всех бинов 
+вызывается метод `register()`
 
 > Отличия `@Configuration` и `@ComponentScan`:
-> - `@Configuration`: в текущем классе читать бины с аннотацией `@Bean`. В не-помеченных классах Spring тоже сканирует, но `@Configuration` - в первую очередь, поэтому обычно пишут `@Bean` именно там
-> - `@ComponentScan`: сканировать пакет на `@Component` – по умолчанию пакет класса с аннотацией @ComponentScan и его подпакеты
+> - `@Configuration`: в текущем классе читать бины с аннотацией `@Bean`. В не-помеченных классах 
+> Spring тоже сканирует, но `@Configuration` - в первую очередь, поэтому обычно пишут `@Bean` именно там
+> - `@ComponentScan`: сканировать пакет на `@Component` – по умолчанию пакет класса с аннотацией 
+> @ComponentScan и его подпакеты
 
 ## 4.2 @Import & @ImportResource
-В классе `@Configuration` можно указывать xml файлы с помощью `@ImportResource` (не используется) и другие классы-Configuration с помощью `@Import`, чтобы комбинировать конфигурации
+В классе `@Configuration` можно указывать xml файлы с помощью `@ImportResource` (не используется) 
+и другие классы-Configuration с помощью `@Import`, чтобы комбинировать конфигурации
 
 ## 4.3 @Bean. Часть 1
 - Название метода - id бина
-- Чтобы указать конкретный id бина при внеднерии, либо назвать аргумент/поле как id, либо `@Qualifier("id")`
+- Чтобы указать конкретный id бина при внеднерии, либо назвать аргумент/поле как id, либо 
+- `@Qualifier("id")`
 - Аргументы `@Bean`:
   - `autowireCandidate`: использовать ли при внедрении
   - `initMethod`, `destroyMethod` - аналоги `PostConstruct` и `PreDestroy`
 - Можно при `@Bean` указывать `@Scope`
+
+## 4.4 @Bean. Часть 2
+- Можно внедрять бины прямо как вызов метода, как в `userRepository3`:
+
+![img_1.png](img_1.png)
+
+> У pool3 не указан **`scope`**, т. е. он синглтон, и **`pool3()`** будет возвращать
+> **один и тот же бин!** 
+
+## 4.5 Profiles
+
+Аннотацию `@Profile` можно ставить над `@Bean` или над `@Component`. В ней указывать профили.
+- Поддерживает логические выражения:
+
+![img_2.png](img_2.png)
