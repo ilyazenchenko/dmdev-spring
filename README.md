@@ -287,3 +287,22 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 ![img_4.png](imgs/p4-5/img_4.png)
 
 ![img_5.png](imgs/p4-5/img_5.png)
+
+# 6. Spring Boot
+
+## 6.1 Spring Boot. Введение
+
+Если добавлять какие-то зависимости/модули в `Spring`, их нужно конфигурировать. 
+`Spring Boot` все конфигурации содержит из коробки: в каждое `Spring Boot` приложение транзитивно тянется
+```xml
+org.springframework.book:spring-boot-autoconfigure
+```
+
+Спринг бут делает за нас это:
+![img.png](img.png)
+
+![img_1.png](img_1.png)
+
+![img_2.png](img_2.png)
+
+Бины, автоматически настроенные `Spring Boot`, можно переопределить
