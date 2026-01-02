@@ -306,3 +306,40 @@ org.springframework.book:spring-boot-autoconfigure
 ![img_2.png](img_2.png)
 
 Бины, автоматически настроенные `Spring Boot`, можно переопределить
+
+## 6.2 @Conditional
+
+- Можно создавать бины/конфигурации по условиям: аннотация `@Conditional` (`@Profile` использует ее под капотом)
+- Передаем в нее Class, который реализует интерфейс Condition и его метод `matches(ConditionContext, AnnotatedTypeMetadata)`
+
+В `Spring Boot` есть свои аннотации:
+
+![img_3.png](img_3.png)
+
+## 6.3 Spring Boot. Настройка проекта
+
+- `Gradle`:
+  - добавить plugin `spring boot`
+  - добавить plugin `dependency management`
+  - добавить dependency `spring-boot-starter`
+  - версии не указываем, `spring boot` `dependency management` делает это за нас
+- `Main class`:
+  - `SpringBootApplication.run(class, args)`
+  - `@SpringBootApplication`
+- Можно сделать с `Spring initialzr`
+- `Maven`:
+  - У него есть `<parent> spring-boot-starter-parent`
+  - В `parent` есть `spring-boot-dependencies`, и в нем **куча** версий зависимостей на все случаи жизни, совместимых с этой версией `spring boot`
+
+## 6.4 `@SpringBootApplication`
+
+- Все классы и пакеты должны лежать на том же уровне/ниже класса `@SpringBootApplication`
+- `SpringBootApplication.run` возвращает контекст
+- `@SpringBootApplication` содержит:
+  - `@SpringBootConfiguration` (Configuration, но одна на класс)
+  - `@ComponentScan`
+  - `@PropertySource` подтягивается тоже, сканируется application properties/yaml
+  - `@EnableAutoConfiguration` – автоматически подтягиваются автоконфигурации 
+из `spring-boot-autoconfigure`, но подтягиваются по условиям `@Conditional`,
+могут добавлять какие-то свои бины (**то есть Spring Boot может добавлять какие-то бины**)
+  - 
