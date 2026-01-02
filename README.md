@@ -276,3 +276,14 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 - Поддерживает логические выражения:
 
 ![img_2.png](img_2.png)
+
+# 5. EventListeners
+
+## 5.1 EventListeners. 1,2
+
+В Spring можно делать слушатели событий:
+![img_3.png](img_3.png)
+
+![img_4.png](img_4.png)
+
+![img_5.png](img_5.png)
