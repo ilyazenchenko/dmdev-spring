@@ -200,7 +200,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 > 1. **Безопасность NPE:** Зависимости через конструктор гарантированно инициализированы при создании бина, их можно сделать `final`. `@Autowired` выкинет ошибку, если не найдет бина и required!=false, но в какой-то момент может быть `null`
 > 2. **Порядок инициализации:** через конструктор зависимости доступны сразу после создания бина. `@Autowired` срабатывает после конструктора, что может вызвать проблемы
 > 3. **Тестирование:** С конструктором можно легко создать объект в тестах без Spring-контекста. `@Autowired` требует настройки контекста или `ReflectionTestUtils`
-> 4. **Явные зависимости:** Конструктор явно показывает все обязательные зависимости класса, и если их слишком много
+> 4. **Явные зависимости:** Конструктор явно показывает все обязательные зависимости класса, и если их слишком много, и позволяет обнаружить циклические
 > 5. **Spring recommendation:** Официальная документация `Spring` рекомендует `constructor injection`
 
 ## 3.7 Bean Definition Readers
@@ -225,3 +225,33 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 Для совместимости Spring поддерживает аннотации JSR:
 
 ![img_9.png](imgs/p3/img_9.png)
+
+# 4. Java-based Configuration
+
+## 4.1 Java-based Configuration
+
+Пример кастомных фильтров в аннотации:
+![img.png](img.png)
+
+Создать ApplicationConfiguration (Java) контекст:
+```java
+ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfiguration.class);
+```
+
+Что под капотом:
+у AnnotationConfigApplicationContext есть поля reader, scanner, и в конструкторе для всех бинов вызывается метод register()
+
+> Отличия `@Configuration` и `@ComponentScan`:
+> - `@Configuration`: в текущем классе читать бины с аннотацией `@Bean`. В не-помеченных классах Spring тоже сканирует, но `@Configuration` - в первую очередь, поэтому обычно пишут `@Bean` именно там
+> - `@ComponentScan`: сканировать пакет на `@Component` – по умолчанию пакет класса с аннотацией @ComponentScan и его подпакеты
+
+## 4.2 @Import & @ImportResource
+В классе `@Configuration` можно указывать xml файлы с помощью `@ImportResource` (не используется) и другие классы-Configuration с помощью `@Import`, чтобы комбинировать конфигурации
+
+## 4.3 @Bean. Часть 1
+- Название метода - id бина
+- Чтобы указать конкретный id бина при внеднерии, либо назвать аргумент/поле как id, либо `@Qualifier("id")`
+- Аргументы `@Bean`:
+  - `autowireCandidate`: использовать ли при внедрении
+  - `initMethod`, `destroyMethod` - аналоги `PostConstruct` и `PreDestroy`
+- Можно при `@Bean` указывать `@Scope`
