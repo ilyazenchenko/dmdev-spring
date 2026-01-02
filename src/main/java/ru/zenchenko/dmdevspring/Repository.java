@@ -1,15 +1,19 @@
 package ru.zenchenko.dmdevspring;
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Repository {
 
-    @InjectBean
+    @Autowired(required = false)
     private ConnectionPool connectionPool;
 
     @PostConstruct
     public void init() {
-        System.out.println("ConnectionPool: " + connectionPool);
+        System.out.println("here");
+        System.out.println(connectionPool.toString());
     }
 
 }
