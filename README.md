@@ -299,11 +299,11 @@ org.springframework.book:spring-boot-autoconfigure
 ```
 
 Спринг бут делает за нас это:
-![img.png](img.png)
+![img.png](imgs/p6/img.png)
 
-![img_1.png](img_1.png)
+![img_1.png](imgs/p6/img_1.png)
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/p6/img_2.png)
 
 Бины, автоматически настроенные `Spring Boot`, можно переопределить
 
@@ -314,7 +314,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 В `Spring Boot` есть свои аннотации:
 
-![img_3.png](img_3.png)
+![img_3.png](imgs/p6/img_3.png)
 
 ## 6.3 Spring Boot. Настройка проекта
 
@@ -346,7 +346,7 @@ org.springframework.book:spring-boot-autoconfigure
 ## 6.5 Lombok
 - Вместо всех gradle зависимостей по типу preprocessor, можно подключить gradle plugin:
 
-![img_4.png](img_4.png)
+![img_4.png](imgs/p6/img_4.png)
 
 Аннотации:
 - `@Cleanup`: аналог try-with-resources но более гибкая
@@ -355,7 +355,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 > Как с помощью `lombok` сделать конструктор для `final`-полей `@Value`?
 > 1. Делам lombok.config:
-![img_5.png](img_5.png)
+![img_5.png](imgs/p6/img_5.png)
 > 2. Ставим над final полем аннотацию `@Value`/Qualifier и т п
 > 3. Пишем @RequiredArgsConstructor и т п
 > 4. Все, lombok сам в конструктор поставит аннотации
@@ -366,22 +366,22 @@ org.springframework.book:spring-boot-autoconfigure
 пропертей, его проперти можно получить через SpringProperties.method
 
 Вообще, есть 14 вариантов задания пропертей: 
-![img_6.png](img_6.png)
+![img_6.png](imgs/p6/img_6.png)
 
 > Каждый из последущих имеет более высокий приоритет, чем предыдущий
 
 > `VM options` задаются через `-D`, `Program arguments` через `--`
-![img_7.png](img_7.png)
+![img_7.png](imgs/p6/img_7.png)
 
 
 ## 6.7 yaml
 В целом он удобнее, в том числе работа со списками, объектами:
-![img_9.png](img_9.png)
+![img_9.png](imgs/p6/img_9.png)
 
 ## 6.8 `@ConfigurationProperties`
 
 > Можно маппить проперти в объекты/record:
 
-![img_10.png](img_10.png)
+![img_10.png](imgs/p6/img_10.png)
 
-![img_11.png](img_11.png)
+![img_11.png](imgs/p6/img_11.png)
