@@ -331,6 +331,8 @@ org.springframework.book:spring-boot-autoconfigure
   - У него есть `<parent> spring-boot-starter-parent`
   - В `parent` есть `spring-boot-dependencies`, и в нем **куча** версий зависимостей на все случаи жизни, совместимых с этой версией `spring boot`
 
+С Spring Boot включены следующие зависимости:
+![img_1.png](img_1.png)
 ## 6.4 `@SpringBootApplication`
 
 - Все классы и пакеты должны лежать на том же уровне/ниже класса `@SpringBootApplication`
@@ -385,3 +387,34 @@ org.springframework.book:spring-boot-autoconfigure
 ![img_10.png](imgs/p6/img_10.png)
 
 ![img_11.png](imgs/p6/img_11.png)
+
+# 7. Logging Starter
+
+## 7.1 Logging Starter
+
+Для логов есть разные реализации, по умолчанию идет джавовская
+`logback`, можно переопределить:
+
+![img_2.png](img_2.png)
+
+![img_3.png](img_3.png)
+
+Используя аннотацию `@Slf4j`, вот что под капотом:
+
+![img_4.png](img_4.png)
+
+т.е. то же самое
+
+Логи можно настраивать в properties, причем для разных классов разное:
+
+![img_6.png](img_6.png)
+
+## 7.2 Logback Configuration
+
+Во всех логгерах 2 основных понятия: `appender` (куда выгружаем логи: файл, консоль, другой сервер итп)
+и `logger` (пишет в аппендеры, напр `root`)
+
+Можно более низкоуровнево настраивать логи: переопределить xml файл конфигурации.
+В зависимости от используемой системы, например logback:
+
+![img_7.png](img_7.png)
