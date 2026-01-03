@@ -342,4 +342,46 @@ org.springframework.book:spring-boot-autoconfigure
   - `@EnableAutoConfiguration` – автоматически подтягиваются автоконфигурации 
 из `spring-boot-autoconfigure`, но подтягиваются по условиям `@Conditional`,
 могут добавлять какие-то свои бины (**то есть Spring Boot может добавлять какие-то бины**)
-  - 
+
+## 6.5 Lombok
+- Вместо всех gradle зависимостей по типу preprocessor, можно подключить gradle plugin:
+
+![img_4.png](img_4.png)
+
+Аннотации:
+- `@Cleanup`: аналог try-with-resources но более гибкая
+- `@NonNull`: на аргументе метода будет проверять и кидать `NPE` если передан `null` с именем аргумента
+- `@SneakyThrows`: может быть полезна в лямбдах
+
+> Как с помощью `lombok` сделать конструктор для `final`-полей `@Value`?
+> 1. Делам lombok.config:
+![img_5.png](img_5.png)
+> 2. Ставим над final полем аннотацию `@Value`/Qualifier и т п
+> 3. Пишем @RequiredArgsConstructor и т п
+> 4. Все, lombok сам в конструктор поставит аннотации
+
+## 6.6 Properties
+
+Можно сделать файл spring.properties, он для более low-level
+пропертей, его проперти можно получить через SpringProperties.method
+
+Вообще, есть 14 вариантов задания пропертей: 
+![img_6.png](img_6.png)
+
+> Каждый из последущих имеет более высокий приоритет, чем предыдущий
+
+> `VM options` задаются через `-D`, `Program arguments` через `--`
+![img_7.png](img_7.png)
+
+
+## 6.7 yaml
+В целом он удобнее, в том числе работа со списками, объектами:
+![img_9.png](img_9.png)
+
+## 6.8 `@ConfigurationProperties`
+
+> Можно маппить проперти в объекты/record:
+
+![img_10.png](img_10.png)
+
+![img_11.png](img_11.png)
