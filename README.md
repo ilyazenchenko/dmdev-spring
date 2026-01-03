@@ -299,11 +299,12 @@ org.springframework.book:spring-boot-autoconfigure
 ```
 
 Спринг бут делает за нас это:
-![img.png](imgs/p6/img.png)
 
-![img_1.png](imgs/p6/img_1.png)
+<img alt="img.png" src="imgs/p6/img.png" width="800"/>
 
-![img_2.png](imgs/p6/img_2.png)
+<img alt="img_1.png" src="imgs/p6/img_1.png" width="800"/>
+
+<img alt="img_2.png" src="imgs/p6/img_2.png" width="800"/>
 
 Бины, автоматически настроенные `Spring Boot`, можно переопределить
 
@@ -314,7 +315,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 В `Spring Boot` есть свои аннотации:
 
-![img_3.png](imgs/p6/img_3.png)
+<img alt="img_3.png" src="imgs/p6/img_3.png" width="800"/>
 
 ## 6.3 Spring Boot. Настройка проекта
 
@@ -332,7 +333,7 @@ org.springframework.book:spring-boot-autoconfigure
   - В `parent` есть `spring-boot-dependencies`, и в нем **куча** версий зависимостей на все случаи жизни, совместимых с этой версией `spring boot`
 
 С Spring Boot включены следующие зависимости:
-![img_1.png](imgs/p7/img_1.png)
+<img alt="img_1.png" src="imgs/p7/img_1.png" width="800"/>
 ## 6.4 `@SpringBootApplication`
 
 - Все классы и пакеты должны лежать на том же уровне/ниже класса `@SpringBootApplication`
@@ -348,7 +349,7 @@ org.springframework.book:spring-boot-autoconfigure
 ## 6.5 Lombok
 - Вместо всех gradle зависимостей по типу preprocessor, можно подключить gradle plugin:
 
-![img_4.png](imgs/p6/img_4.png)
+<img alt="img_4.png" src="imgs/p6/img_4.png" width="800"/>
 
 Аннотации:
 - `@Cleanup`: аналог try-with-resources но более гибкая
@@ -357,7 +358,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 > Как с помощью `lombok` сделать конструктор для `final`-полей `@Value`?
 > 1. Делам lombok.config:
-![img_5.png](imgs/p6/img_5.png)
+> <img alt="img_5.png" src="imgs/p6/img_5.png" width="800"/>
 > 2. Ставим над final полем аннотацию `@Value`/Qualifier и т п
 > 3. Пишем @RequiredArgsConstructor и т п
 > 4. Все, lombok сам в конструктор поставит аннотации
@@ -367,26 +368,26 @@ org.springframework.book:spring-boot-autoconfigure
 Можно сделать файл spring.properties, он для более low-level
 пропертей, его проперти можно получить через SpringProperties.method
 
-Вообще, есть 14 вариантов задания пропертей: 
-![img_6.png](imgs/p6/img_6.png)
+Вообще, есть 14 вариантов задания пропертей:
+<img alt="img_6.png" src="imgs/p6/img_6.png" width="800"/>
 
 > Каждый из последущих имеет более высокий приоритет, чем предыдущий
 
 > `VM options` задаются через `-D`, `Program arguments` через `--`
-![img_7.png](imgs/p6/img_7.png)
+<img alt="img_7.png" src="imgs/p6/img_7.png" width="800"/>
 
 
 ## 6.7 yaml
 В целом он удобнее, в том числе работа со списками, объектами:
-![img_9.png](imgs/p6/img_9.png)
+<img alt="img_9.png" src="imgs/p6/img_9.png" width="800"/>
 
 ## 6.8 `@ConfigurationProperties`
 
 > Можно маппить проперти в объекты/record:
 
-![img_10.png](imgs/p6/img_10.png)
+<img alt="img_10.png" src="imgs/p6/img_10.png" width="800"/>
 
-![img_11.png](imgs/p6/img_11.png)
+<img alt="img_11.png" src="imgs/p6/img_11.png" width="800"/>
 
 # 7. Logging Starter
 
@@ -395,26 +396,26 @@ org.springframework.book:spring-boot-autoconfigure
 Для логов есть разные реализации, по умолчанию идет джавовская
 `logback`, можно переопределить:
 
-![img_2.png](imgs/p7/img_2.png)
+<img alt="img_2.png" src="imgs/p7/img_2.png" width="800"/>
 
-![img_3.png](imgs/p7/img_3.png)
+<img alt="img_3.png" src="imgs/p7/img_3.png" width="800"/>
 
 Используя аннотацию `@Slf4j`, вот что под капотом:
 
-![img_4.png](imgs/p7/img_4.png)
+<img alt="img_4.png" src="imgs/p7/img_4.png" width="800"/>
 
 т.е. то же самое
 
 Логи можно настраивать в properties, причем для разных классов разное:
 
-![img_6.png](imgs/p7/img_6.png)
+<img alt="img_6.png" src="imgs/p7/img_6.png" width="800"/>
 
 ## 7.2 Logback Configuration
 
 Во всех логгерах 2 основных понятия: `appender` (куда выгружаем логи: файл, консоль, другой сервер итп)
 и `logger` (пишет в аппендеры, напр `root`)
 
-Можно более низкоуровнево настраивать логи: переопределить xml файл конфигурации.
-В зависимости от используемой системы, например logback:
+Можно более низкоуровнево настраивать логи: переопределить `xml` файл конфигурации.
+В зависимости от используемой системы, например `logback`:
 
-![img_7.png](imgs/p7/img_7.png)
+<img alt="img_7.png" src="imgs/p7/img_7.png" width="800"/>
