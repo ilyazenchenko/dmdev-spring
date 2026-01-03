@@ -332,7 +332,7 @@ org.springframework.book:spring-boot-autoconfigure
   - В `parent` есть `spring-boot-dependencies`, и в нем **куча** версий зависимостей на все случаи жизни, совместимых с этой версией `spring boot`
 
 С Spring Boot включены следующие зависимости:
-![img_1.png](img_1.png)
+![img_1.png](imgs/p7/img_1.png)
 ## 6.4 `@SpringBootApplication`
 
 - Все классы и пакеты должны лежать на том же уровне/ниже класса `@SpringBootApplication`
@@ -395,19 +395,19 @@ org.springframework.book:spring-boot-autoconfigure
 Для логов есть разные реализации, по умолчанию идет джавовская
 `logback`, можно переопределить:
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/p7/img_2.png)
 
-![img_3.png](img_3.png)
+![img_3.png](imgs/p7/img_3.png)
 
 Используя аннотацию `@Slf4j`, вот что под капотом:
 
-![img_4.png](img_4.png)
+![img_4.png](imgs/p7/img_4.png)
 
 т.е. то же самое
 
 Логи можно настраивать в properties, причем для разных классов разное:
 
-![img_6.png](img_6.png)
+![img_6.png](imgs/p7/img_6.png)
 
 ## 7.2 Logback Configuration
 
@@ -417,4 +417,4 @@ org.springframework.book:spring-boot-autoconfigure
 Можно более низкоуровнево настраивать логи: переопределить xml файл конфигурации.
 В зависимости от используемой системы, например logback:
 
-![img_7.png](img_7.png)
+![img_7.png](imgs/p7/img_7.png)
