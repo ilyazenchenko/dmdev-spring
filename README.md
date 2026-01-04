@@ -462,7 +462,7 @@ org.springframework.book:spring-boot-autoconfigure
 ```
 
 Эти две аннотации можно заменить на `@SpringBootTest`:
-<img alt="img_11.png" src="img_11.png" width="800"/>
+<img alt="img_11.png" src="imgs/p8/img_11.png" width="800"/>
 (`SpringBoot...Bootstraper` автоматически ищет класс `SpringBootApplication`)
 
 Пример интеграционного теста:
@@ -492,12 +492,15 @@ org.springframework.book:spring-boot-autoconfigure
 
 > Чтобы не дублировать везде `@ActiveProfiles` и `@SprintBootTest` можно сделать
 свою аннотацию:
+> 
 > ![img_13.png](imgs/p8/img_13.png)
 
 > Чтобы не писать над полями `@Autowired`, можно аналогично сделать их 
 > `final` и добавить `@RequiredArgsConstructor`, но нужно будет добавить:
-> - или ![img_14.png](imgs/p8/img_14.png)
-> - или в `test/resources/spring.properties`: ![img_15.png](imgs/p8/img_15.png)
+> - или 
+> ![img_14.png](imgs/p8/img_14.png)
+> - или в `test/resources/spring.properties`: 
+> ![img_15.png](imgs/p8/img_15.png)
 
 ### 8.5 Context Caching
 
@@ -509,7 +512,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 Если хотим что-то переопределить для всего контекста, то делаем класс 
 `@TestConfiguration` и 
-<img alt="img_16.png" src="img_16.png" width="400"/>
+<img alt="img_16.png" src="imgs/p8/img_16.png" width="400"/>
 
 Помечать контекст "испорченным" можно с помощью аннотации `@DirtiesContext`
 над классом или методом
