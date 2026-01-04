@@ -2,18 +2,18 @@
 
 # 1 Введение
 
-## 1.1 Введение
+### 1.1 Введение
 - Библиотека - набор доп методов
 - Фреймворк - каркас приложения
 - Spring удобный
 
-## 1.3 `Dependency Injection. Inverison of control`
+### 1.3 `Dependency Injection. Inverison of control`
 - **`Dependencies`** (зависимости) – другие объекты, с которыми работает текущий объект и использует их функциональность
 - **`IoC` (Inversion of Control) - инверсия управления** - принцип программирования, при котором управление программой передается фреймворку, а не программисту
 - **`DI` (dependency injection)** – внедрение зависимостей – одна из реализаций IoC, посредством которой созданием объекта и внедрением его зависимостей занимается другой объект (фреймворк)
 - **`DI`** внедряет зависимости через: конструктор, статический метод, свойства
 
-## 1.4 `IoC Container`
+### 1.4 `IoC Container`
 - Это объект, который занимается созданием других объектов и внедрением в них зависимостей
 - `Bean` – объект со всеми необходимыми зависимостями, который **был создан** `IoC Container` (`Controller, Service, Repository`)
 - Кроме `Bean`, в `Spring` приложении есть `POJO - dto, entity`. Не содержат логики
@@ -23,7 +23,7 @@
 ![img.png](imgs/p2/img.png)
 
 # 2 XML-based Configuration
-## 2.1 XML-based Configuration
+### 2.1 XML-based Configuration
 - Методы `BeanFactory`
 ![img_1.png](imgs/p2/img_1.png)
 
@@ -35,18 +35,18 @@
 - вызывается конструктор без параметров (рефлексия)
 ![img_3.png](imgs/p2/img_3.png)
 
-## 2.2 Constructor injection
+### 2.2 Constructor injection
 - Можно указать name - имя аргумента, тип - для перегруженных конструкторов
 
 ![img_4.png](imgs/p2/img_4.png)
 
-## 2.3 Factory Method Injection
+### 2.3 Factory Method Injection
 - Чтобы ссылаться на бин при создании бинов, нужно указывать не value а ref
 - вместо конструкторов при создании бина можно использовать Фабричный метод:
 
 ![img_5.png](imgs/p2/img_5.png)
 
-## 2.4 Property Injection
+### 2.4 Property Injection
 - Можно внедрять с помощью сеттеров, **но есть минусы: поле должно быть не final и возоможны циклические зависимости**
 - Вот как в xml:
 
@@ -63,13 +63,13 @@
   - сеттеры
   - создает
 
-## 2.5 Bean Scopes
+### 2.5 Bean Scopes
 ![img_8.png](imgs/p2/img_8.png)
 
 - основные (не считая `web`): `singleton` и `prototype`
 - для `prototype` `IoC` при каждом запросе прогоняет полностью жизненный цикл бина и **выплевывает** его, не запоминая
 
-## 2.6 Lifecycle Callbacks
+### 2.6 Lifecycle Callbacks
 - Можно добавлять `PostContruct/PreDestroy` методы, **лучше использовать аннотации**
 ![img_9.png](imgs/p2/img_9.png)
 
@@ -77,24 +77,24 @@
 > 
 > ! У Контекста (= `IoC-контейнера`) на прототипы нет ссылки! он ее выплюнул, у прототипов PreDestroy не вызываются
 
-## 2.7 properties файлы
+### 2.7 properties файлы
 - источник данных для приложения. благодаря им не нужно каждый раз перекомпилить
 
 ![img_10.png](imgs/p2/img_10.png)
 - можно использовать в xml ))
 
-## 2.8 BeanFactoryPostProcessor
+### 2.8 BeanFactoryPostProcessor
 - Всякие el-выражения для properties и т п рассчитывает BeanFactoryPostProcessor
 
 ![img_11.png](imgs/p2/img_11.png)
 
-## 2.9 Custom BeanFactoryPostProcessor
+### 2.9 Custom BeanFactoryPostProcessor
 - Можно реализовать свои BeanFactoryPostProcessor. Для этого реализовать в них BeanFactoryPostProcessor
 - Можно настраивать порядос помощью implements Ordered getOrder или implements PriorityOrdered
 
 # 3 Annotation-based configuration
 
-## 3.1 Annotation-based Configuration
+### 3.1 Annotation-based Configuration
 - В xml можно добавить
 
 ![img.png](imgs/p3/img.png)
@@ -105,7 +105,7 @@
 
 > `BeanFactoryPostProcessor` уже знаем, а вот `BeanPostProcessor` - новый этап `Lifecycle`
 
-## 3.2 BeanPostProcessor
+### 3.2 BeanPostProcessor
 
 - `BeanPostProcessor` - это особенные бины, которые участвуют в жизненном цикле бинов и занимаются их конфигураций (наподобие `BeanFacotryPostProcessor`, только для Beans, а не `Bean Definitions`).
 - ! `BeanFactoryPostProcessor` вызывается для контекста 1 раз, а `BeanPostProcessor` - для каждого бина
@@ -118,7 +118,7 @@
 2. `BeanPostProcessors` – чтобы обрабатывать бины
 3. `Beans`
 
-## 3.3 Свой BeanPostProcessor
+### 3.3 Свой BeanPostProcessor
 
 > 1 Сделали свою аннотацию `InjectBean`
 > 
@@ -169,7 +169,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 }
 ```
 
-## 3.4 Свой BeanPostProcessor 2
+### 3.4 Свой BeanPostProcessor 2
 
 - Есть методы:
 
@@ -181,7 +181,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
 > и если мы привносим какую-то сквозную функциональность с помощью Proxy, то нужно это делать в `postProcessAfterInitialization`, так как прокси вернет другой класс и могут быть ошибки
 
-## 3.5 @Autowired, @Resource, @Value
+### 3.5 @Autowired, @Resource, @Value
 > `@Resource` то же самое что `@Autowired`, просто чтобы поддерживать спецификацию `JavaEE`, лучше использовать `@Autowired`
 > 
 > `@Autowired` можно в поле, сеттере, конструкторе
@@ -190,7 +190,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 > 
 > `@Value(${spring.el})` - подставить из пропертей
 
-## 3.6 Classpath scanning
+### 3.6 Classpath scanning
 - В пакете stereotype есть аннотации `Component, Controller, Service, Repository`
 - Последние 3 – просто наследуют `Component`, для логического разделения
 - В `value Component` можно написать id бина `@Component("myBean1")`
@@ -203,13 +203,13 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 > 4. **Явные зависимости:** Конструктор явно показывает все обязательные зависимости класса, и если их слишком много, и позволяет обнаружить циклические
 > 5. **Spring recommendation:** Официальная документация `Spring` рекомендует `constructor injection`
 
-## 3.7 Bean Definition Readers
+### 3.7 Bean Definition Readers
 - Они читают xml/аннотации и строят контекст
 
 ![img_3.png](imgs/p3/img_3.png)
 
 
-## 3.8 TypeFilters
+### 3.8 TypeFilters
 
 <img src="imgs/p3/img_8.png" width="750">
 <img src="imgs/p3/img_4.png" width="750">
@@ -217,11 +217,11 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 Так Spring понимает, какие классы - бины. По умолчанию - `annotation`. То есть `@Component`, и т п. 
 Можно настраивать в аннотации `@ComponentScan`: например `regex` - все, оканчивающиеся на Bean и т п.
 
-## 3.9 @Scope
+### 3.9 @Scope
 
 В аннотациях scope можно указывать в аннотации `@Scope: "prototype", "singleton"`
 
-## 3.10 JSR 250, JSR 330
+### 3.10 JSR 250, JSR 330
 
 Для совместимости Spring поддерживает аннотации JSR:
 
@@ -229,7 +229,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
 # 4. Java-based Configuration
 
-## 4.1 Java-based Configuration
+### 4.1 Java-based Configuration
 
 Пример кастомных фильтров в аннотации:
 ![img.png](imgs/p4-5/img.png)
@@ -249,11 +249,11 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 > - `@ComponentScan`: сканировать пакет на `@Component` – по умолчанию пакет класса с аннотацией 
 > @ComponentScan и его подпакеты
 
-## 4.2 @Import & @ImportResource
+### 4.2 @Import & @ImportResource
 В классе `@Configuration` можно указывать xml файлы с помощью `@ImportResource` (не используется) 
 и другие классы-Configuration с помощью `@Import`, чтобы комбинировать конфигурации
 
-## 4.3 @Bean. Часть 1
+### 4.3 @Bean. Часть 1
 - Название метода - id бина
 - Чтобы указать конкретный id бина при внеднерии, либо назвать аргумент/поле как id, либо 
 - `@Qualifier("id")`
@@ -262,7 +262,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
   - `initMethod`, `destroyMethod` - аналоги `PostConstruct` и `PreDestroy`
 - Можно при `@Bean` указывать `@Scope`
 
-## 4.4 @Bean. Часть 2
+### 4.4 @Bean. Часть 2
 - Можно внедрять бины прямо как вызов метода, как в `userRepository3`:
 
 ![img_1.png](imgs/p4-5/img_1.png)
@@ -270,7 +270,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 > У pool3 не указан **`scope`**, т. е. он синглтон, и **`pool3()`** будет возвращать
 > **один и тот же бин!** 
 
-## 4.5 Profiles
+### 4.5 Profiles
 
 Аннотацию `@Profile` можно ставить над `@Bean` или над `@Component`. В ней указывать профили.
 - Поддерживает логические выражения:
@@ -279,7 +279,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 
 # 5. EventListeners
 
-## 5.1 EventListeners. 1,2
+### 5.1 EventListeners. 1,2
 
 В Spring можно делать слушатели событий:
 ![img_3.png](imgs/p4-5/img_3.png)
@@ -290,7 +290,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 
 # 6. Spring Boot
 
-## 6.1 Spring Boot. Введение
+### 6.1 Spring Boot. Введение
 
 Если добавлять какие-то зависимости/модули в `Spring`, их нужно конфигурировать. 
 `Spring Boot` все конфигурации содержит из коробки: в каждое `Spring Boot` приложение транзитивно тянется
@@ -308,7 +308,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 Бины, автоматически настроенные `Spring Boot`, можно переопределить
 
-## 6.2 @Conditional
+### 6.2 @Conditional
 
 - Можно создавать бины/конфигурации по условиям: аннотация `@Conditional` (`@Profile` использует ее под капотом)
 - Передаем в нее Class, который реализует интерфейс Condition и его метод `matches(ConditionContext, AnnotatedTypeMetadata)`
@@ -317,7 +317,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 <img alt="img_3.png" src="imgs/p6/img_3.png" width="800"/>
 
-## 6.3 Spring Boot. Настройка проекта
+### 6.3 Spring Boot. Настройка проекта
 
 - `Gradle`:
   - добавить plugin `spring boot`
@@ -334,7 +334,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 С Spring Boot включены следующие зависимости:
 <img alt="img_1.png" src="imgs/p7/img_1.png" width="800"/>
-## 6.4 `@SpringBootApplication`
+### 6.4 `@SpringBootApplication`
 
 - Все классы и пакеты должны лежать на том же уровне/ниже класса `@SpringBootApplication`
 - `SpringBootApplication.run` возвращает контекст
@@ -346,7 +346,7 @@ org.springframework.book:spring-boot-autoconfigure
 из `spring-boot-autoconfigure`, но подтягиваются по условиям `@Conditional`,
 могут добавлять какие-то свои бины (**то есть Spring Boot может добавлять какие-то бины**)
 
-## 6.5 Lombok
+### 6.5 Lombok
 - Вместо всех gradle зависимостей по типу preprocessor, можно подключить gradle plugin:
 
 <img alt="img_4.png" src="imgs/p6/img_4.png" width="800"/>
@@ -355,6 +355,7 @@ org.springframework.book:spring-boot-autoconfigure
 - `@Cleanup`: аналог try-with-resources но более гибкая
 - `@NonNull`: на аргументе метода будет проверять и кидать `NPE` если передан `null` с именем аргумента
 - `@SneakyThrows`: может быть полезна в лямбдах
+- `@RequiredArgsConstructor`: конструктор для `@NonNull` и `final` полей
 
 > Как с помощью `lombok` сделать конструктор для `final`-полей `@Value`?
 > 1. Делам lombok.config:
@@ -363,7 +364,7 @@ org.springframework.book:spring-boot-autoconfigure
 > 3. Пишем @RequiredArgsConstructor и т п
 > 4. Все, lombok сам в конструктор поставит аннотации
 
-## 6.6 Properties
+### 6.6 Properties
 
 Можно сделать файл spring.properties, он для более low-level
 пропертей, его проперти можно получить через SpringProperties.method
@@ -377,11 +378,11 @@ org.springframework.book:spring-boot-autoconfigure
 <img alt="img_7.png" src="imgs/p6/img_7.png" width="800"/>
 
 
-## 6.7 yaml
+### 6.7 yaml
 В целом он удобнее, в том числе работа со списками, объектами:
 <img alt="img_9.png" src="imgs/p6/img_9.png" width="800"/>
 
-## 6.8 `@ConfigurationProperties`
+### 6.8 `@ConfigurationProperties`
 
 > Можно маппить проперти в объекты/record:
 
@@ -391,7 +392,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 # 7. Logging Starter
 
-## 7.1 Logging Starter
+### 7.1 Logging Starter
 
 Для логов есть разные реализации, по умолчанию идет джавовская
 `logback`, можно переопределить:
@@ -410,7 +411,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 <img alt="img_6.png" src="imgs/p7/img_6.png" width="800"/>
 
-## 7.2 Logback Configuration
+### 7.2 Logback Configuration
 
 Во всех логгерах 2 основных понятия: `appender` (куда выгружаем логи: файл, консоль, другой сервер итп)
 и `logger` (пишет в аппендеры, напр `root`)
@@ -419,3 +420,96 @@ org.springframework.book:spring-boot-autoconfigure
 В зависимости от используемой системы, например `logback`:
 
 <img alt="img_7.png" src="imgs/p7/img_7.png" width="800"/>
+
+# 8. Test Starter
+
+### 8.1 Test Starter
+
+Что входит в `starter-test`:
+
+<img alt="img.png" src="img.png" width="800"/>
+
+Базовый тест:
+
+<img alt="img_1.png" src="img_1.png" width="800"/>
+
+### 8.2 Spring Integration testing. P1
+
+Для интеграционных тестов нужно как-то:
+1. Внедрить зависимости
+2. Кэшировать контекст, чтобы не поднимать каждый раз
+3. Управлять транзакциями
+
+Из чего состоит `Spring Integration testing`:
+
+<img alt="img_2.png" src="img_2.png" width="800"/>
+
+Есть колбеки:
+
+<img alt="img_3.png" src="img_3.png" width="800"/>
+
+`Test context framework`:
+
+<img alt="img_8.png" src="img_8.png" width="700"/>
+
+### 8.3 Spring Integration testing. P2
+
+> Под тесты лучше код не менять
+
+```java
+@ExtendWith(SpringExtention.class) // интеграция JUnit5 с Spring TestContext
+@ContextConfiguration(SpringApplication.class) // класс где запускается SpringBoot приложение
+```
+
+Эти две аннотации можно заменить на `@SpringBootTest`:
+<img alt="img_11.png" src="img_11.png" width="800"/>
+(`SpringBoot...Bootstraper` автоматически ищет класс `SpringBootApplication`)
+
+Пример интеграционного теста:
+```java
+@SpringBootTest
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = ApplicationRunner.class, initializers = ConfigDataApplicationO
+  public class CompanyServiceIT {
+    private static final Integer COMPANY_ID = 1;
+    @Autowired // в тестах так можно
+    private CompanyService companyService;
+    @Test
+    void findById() {
+        var actualResult =  Optional<CompanyReadDto> = companyService.findById(COMPANY_ID);
+        assertTrue(actualResult.isPresent());|
+        var expectedResult = new CompanyReadDto (COMPANY_ID);
+        actualResult.ifPresent(actual -> assertEquals(expectedResult, actual));
+    }
+}
+```
+
+> На каждый класс `@SpringBootTest` создается `TestContextManager` (см. 8.2), 
+> `TestContext` содержит информацию о выполняемом тесте, а `TestExecutionListeners` 
+> выполняют различную логику, например внедрение зависимостей
+
+### 8.4 Spring Integration testing. P3
+
+> Чтобы не дублировать везде `@ActiveProfiles` и `@SprintBootTest` можно сделать
+свою аннотацию:
+> ![img_13.png](img_13.png)
+
+> Чтобы не писать над полями `@Autowired`, можно аналогично сделать их 
+> `final` и добавить `@RequiredArgsConstructor`, но нужно будет добавить:
+> - или ![img_14.png](img_14.png)
+> - или в `test/resources/spring.properties`: ![img_15.png](img_15.png)
+
+### 8.5 Context Caching
+
+Если Spring видит изменение конфигурации контекста в разных, например, классах,
+то он пересоздает контекст. Например, если на одном классе есть `@ActiveProfiles("test")`,
+пересоздаст.
+
+Если пометим какой-то бин как `@SpyBean` или `@MockBean`, то пересоздаст
+
+Если хотим что-то переопределить для всего контекста, то делаем класс 
+`@TestConfiguration` и 
+<img alt="img_16.png" src="img_16.png" width="400"/>
+
+Помечать контекст "испорченным" можно с помощью аннотации `@DirtiesContext`
+над классом или методом
