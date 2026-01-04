@@ -427,11 +427,11 @@ org.springframework.book:spring-boot-autoconfigure
 
 Что входит в `starter-test`:
 
-<img alt="img.png" src="img.png" width="800"/>
+<img alt="img.png" src="imgs/p8/img.png" width="800"/>
 
 Базовый тест:
 
-<img alt="img_1.png" src="img_1.png" width="800"/>
+<img alt="img_1.png" src="imgs/p8/img_1.png" width="800"/>
 
 ### 8.2 Spring Integration testing. P1
 
@@ -442,15 +442,15 @@ org.springframework.book:spring-boot-autoconfigure
 
 Из чего состоит `Spring Integration testing`:
 
-<img alt="img_2.png" src="img_2.png" width="800"/>
+<img alt="img_2.png" src="imgs/p8/img_2.png" width="800"/>
 
 Есть колбеки:
 
-<img alt="img_3.png" src="img_3.png" width="800"/>
+<img alt="img_3.png" src="imgs/p8/img_3.png" width="800"/>
 
 `Test context framework`:
 
-<img alt="img_8.png" src="img_8.png" width="700"/>
+<img alt="img_8.png" src="imgs/p8/img_8.png" width="700"/>
 
 ### 8.3 Spring Integration testing. P2
 
@@ -492,12 +492,12 @@ org.springframework.book:spring-boot-autoconfigure
 
 > Чтобы не дублировать везде `@ActiveProfiles` и `@SprintBootTest` можно сделать
 свою аннотацию:
-> ![img_13.png](img_13.png)
+> ![img_13.png](imgs/p8/img_13.png)
 
 > Чтобы не писать над полями `@Autowired`, можно аналогично сделать их 
 > `final` и добавить `@RequiredArgsConstructor`, но нужно будет добавить:
-> - или ![img_14.png](img_14.png)
-> - или в `test/resources/spring.properties`: ![img_15.png](img_15.png)
+> - или ![img_14.png](imgs/p8/img_14.png)
+> - или в `test/resources/spring.properties`: ![img_15.png](imgs/p8/img_15.png)
 
 ### 8.5 Context Caching
 
