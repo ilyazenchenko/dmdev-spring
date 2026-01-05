@@ -528,19 +528,19 @@ org.springframework.book:spring-boot-autoconfigure
 
 Как решает проблемы `Spring Data Jpa`:
 
-<img alt="img.png" src="img.png" width="700"/>
+<img alt="img.png" src="imgs/p9/img.png" width="700"/>
 
 ### 9.2 Data JPA Starter. Подключение
 
 Что входит:
 
-<img alt="img_2.png" src="img_2.png" width="700"/>
+<img alt="img_2.png" src="imgs/p9/img_2.png" width="700"/>
 
 > `Hikari` - самый производительный `ConnectionPool`
 
 При подключении стартера, подключается `HibernateJpaAutoConfiguration`:
 
-<img alt="img_3.png" src="img_3.png" width="700"/>
+<img alt="img_3.png" src="imgs/p9/img_3.png" width="700"/>
 
 Для `jpa` у `Spring` 2 основные "ветки" в `properties`:
 - `spring.datasource`
