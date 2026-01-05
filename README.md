@@ -516,3 +516,39 @@ org.springframework.book:spring-boot-autoconfigure
 
 Помечать контекст "испорченным" можно с помощью аннотации `@DirtiesContext`
 над классом или методом
+
+# 9. Data JPA Starter
+
+### 9.1 Data JPA Starter. Введение
+
+У чистого `Hibernate` есть проблемы:
+- нужно писать самому логику `dao`
+- нет декларативного способа управления транзакциями
+- сложная конфигурация
+
+Как решает проблемы `Spring Data Jpa`:
+
+<img alt="img.png" src="img.png" width="700"/>
+
+### 9.2 Data JPA Starter. Подключение
+
+Что входит:
+
+<img alt="img_2.png" src="img_2.png" width="700"/>
+
+> `Hikari` - самый производительный `ConnectionPool`
+
+При подключении стартера, подключается `HibernateJpaAutoConfiguration`:
+
+<img alt="img_3.png" src="img_3.png" width="700"/>
+
+Для `jpa` у `Spring` 2 основные "ветки" в `properties`:
+- `spring.datasource`
+- `spring.jpa`
+
+### 9.3 Hibernate Entities
+
+Спринг бут автоматом сканит `Entity` классы в субдиректориях `@SpringBootApplication`,
+но если например лежит в другом пакете, можно указать аннотацию
+`@EntityScan("путь")` 
+
