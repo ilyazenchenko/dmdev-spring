@@ -651,7 +651,7 @@ interface MyRepo extends Repository<T, ID>
 В `Spring Data JPA` базовый класс-запроса – `RepositoryQuery`.
 Его реализации:
 
-![img_1.png](img_1.png)
+<img alt="img_1.png" src="img_1.png" width="700"/>
 
 - `NamedQuery` – аннотация
 - `NativeJpaQuery` – нативный sql
@@ -666,3 +666,59 @@ interface MyRepo extends Repository<T, ID>
 есть наследники, в которых уже много чего есть:
 `Repository <- CrudRepository <- JpaRepository`,
 в них много готовых методов
+
+### 11.3 PartTreeJpaQuery
+
+Делает из имен методов запросы. Под капотом - регулярки.
+<img alt="img_2.png" src="img_2.png" width="700"/>
+
+Как можно делать:
+<img alt="img_3.png" src="img_3.png" width="700"/>
+
+Все возможности - в доках ))
+
+### 11.4 NamedQuery
+
+Если весь запрос писать в имени метода, имя быстро увеличивается.
+Как вариант решение - использовать NamedQuery. Это реализация 
+`@NamedQuery` из `javax/hibernate`
+
+Ставим аннотацию _над сущностью, пишем имя (формат `Entity.name`)
+и сам запрос (`HQL`). 
+
+<img alt="img_4.png" src="img_4.png" width="700"/>
+
+В репозитории также пишем метод с таким же именем как name. 
+
+> `NamedQuery` имеет приоритет над `PartTreeJpaQuery`, то есть если
+> есть `NamedQuery` с таким именем, то `PartTreeJpaQuery` не создастся
+
+### 11.5 @Query
+Аннотация работает с `SimpleJpaQuery` и `NativeJpaQuery`:
+
+<img alt="img_5.png" src="img_5.png" width="700"/>
+
+> `Spring Data Jpa` (не `Hibernate`) позволяет писать проценты вокруг
+> параметров, без доп знаков (картинка выше)
+
+Удобно сразу достать необходимые сущности с помощью `join fetch`:
+
+<img alt="img_6.png" src="img_6.png" width="700"/>
+
+### 11.6 @Modifying
+По умолчанию `@Query` только для чтения!
+Чтобы можно было изменять, нужно поставить аннотацию `@Modifying`:
+
+<img alt="img_8.png" src="img_8.png" width="700"/>
+
+Есть свойста `clearAutomatically` и `flushAutomatically`:
+
+> Так как `PersistenceContext` работает как кеш, он не увидит изменения
+> после этого метода. Чтобы исправить, нужно поставить:
+> 
+> ![img_9.png](img_9.png)
+> 
+> После этого важно работать именно с _новыми сущностями_, 
+> соединения старых закроются, при обращении к связанным
+> сущностям будет `LazyInitializationException`
+
