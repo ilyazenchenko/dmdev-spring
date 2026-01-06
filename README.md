@@ -1,13 +1,13 @@
 # Spring dmdev
 
-# 1 Введение
+## 1 Введение
 
 ### 1.1 Введение
 - Библиотека - набор доп методов
 - Фреймворк - каркас приложения
 - Spring удобный
 
-### 1.3 `Dependency Injection. Inverison of control`
+### 1.3 Dependency Injection. Inverison of control
 - **`Dependencies`** (зависимости) – другие объекты, с которыми работает текущий объект и использует их функциональность
 - **`IoC` (Inversion of Control) - инверсия управления** - принцип программирования, при котором управление программой передается фреймворку, а не программисту
 - **`DI` (dependency injection)** – внедрение зависимостей – одна из реализаций IoC, посредством которой созданием объекта и внедрением его зависимостей занимается другой объект (фреймворк)
@@ -22,7 +22,7 @@
 - Бины в контексте хранятся как `Map<String, Object>`, то есть id String(!). генерится по разному, как например скажем
 ![img.png](imgs/p2/img.png)
 
-# 2 XML-based Configuration
+## 2. XML-based Configuration
 ### 2.1 XML-based Configuration
 - Методы `BeanFactory`
 ![img_1.png](imgs/p2/img_1.png)
@@ -92,7 +92,7 @@
 - Можно реализовать свои BeanFactoryPostProcessor. Для этого реализовать в них BeanFactoryPostProcessor
 - Можно настраивать порядос помощью implements Ordered getOrder или implements PriorityOrdered
 
-# 3 Annotation-based configuration
+## 3 Annotation-based configuration
 
 ### 3.1 Annotation-based Configuration
 - В xml можно добавить
@@ -227,7 +227,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
 ![img_9.png](imgs/p3/img_9.png)
 
-# 4. Java-based Configuration
+## 4. Java-based Configuration
 
 ### 4.1 Java-based Configuration
 
@@ -277,7 +277,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 
 ![img_2.png](imgs/p4-5/img_2.png)
 
-# 5. EventListeners
+## 5. EventListeners
 
 ### 5.1 EventListeners. 1,2
 
@@ -288,7 +288,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 
 ![img_5.png](imgs/p4-5/img_5.png)
 
-# 6. Spring Boot
+## 6. Spring Boot
 
 ### 6.1 Spring Boot. Введение
 
@@ -390,7 +390,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 <img alt="img_11.png" src="imgs/p6/img_11.png" width="800"/>
 
-# 7. Logging Starter
+## 7. Logging Starter
 
 ### 7.1 Logging Starter
 
@@ -421,7 +421,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 <img alt="img_7.png" src="imgs/p7/img_7.png" width="800"/>
 
-# 8. Test Starter
+## 8. Test Starter
 
 ### 8.1 Test Starter
 
@@ -517,7 +517,7 @@ org.springframework.book:spring-boot-autoconfigure
 Помечать контекст "испорченным" можно с помощью аннотации `@DirtiesContext`
 над классом или методом
 
-# 9. Data JPA Starter
+## 9. Data JPA Starter
 
 ### 9.1 Data JPA Starter. Введение
 
@@ -552,3 +552,82 @@ org.springframework.book:spring-boot-autoconfigure
 но если например лежит в другом пакете, можно указать аннотацию
 `@EntityScan("путь")` 
 
+## 10. Data JPA Transactions
+
+### 10.1 Data JPA Transactions
+
+При подключении `spring-data-jpa-starter`, добавляется класс `JpaBaseConfiguration`.
+Можно управлять как-то вручную `TransactionTemplate`, но почти всегда декларативно`@Transactional`.
+Можно ставить в тестах и в коде:
+
+<img alt="img.png" src="img.png" width="700"/>
+
+Для работы с бд в тестах нужна `@Transactional`, иначе 
+метод-тест не будет помнить значения и будет `LazyInitializationException`.
+
+> По умолчанию после каждого теста происходит rollback (= аннотация `@Rollback`),
+> но можно поставить `@Commit`, и будет не откат а коммит после каждого теста
+
+### 10.2 TransactionAutoConfiguration
+`@Transactional` можно писать и над классом, и над методом,
+над классом имеет приоритет.
+
+Когда пишем `@Transactional`, спринг оборачивает бин в прокси,
+**а если делаем внутренний вызов, транзакция не откроется**: 
+
+![img_1.png](img_1.png)
+
+Это фиксится либо внедрением контекста, либо бина самому себе, 
+но это костыли, поэтому лучше не допускать такой логики.
+
+> Что значит: вместо бина внедряется прокси?
+> 
+> Прокси в `Spring` (`CglibPoxy`) реализована через **наследование**, то есть
+> прокси является `instance` бина, но оборачивает методы в какую-то
+> доп логику, типа транзакций
+
+### 10.3 @Transactional Settings
+
+В такой логике **_по умолчанию_** _новая транзакция не откроется_:
+
+![img_2.png](img_2.png)
+
+Можно это изменить с помощью настройки `@Transactional` - `propagation`.
+Какие у `propagation` могут быть значения:
+- `REQUIRED` (значение по умолчанию) - поддерживает текущую транзакцию, а если ее нет – открывает
+- `SUPPORTS` - поддерживает текущую транзакцию, а если ее нет – не открывает
+- `MANDATORY` - поддерживает текущую транзакцию, а если ее нет – бросает исключение
+- `REQUIRES_NEW` - приостанавливает текущую транзакцию, если есть, и открывает новую 
+транзакцию в новом соединении (могут быть deadlocks)
+- `NOT_SUPPORTED` - приостанавливает текущую транзакцию, выполняется не в транзакции
+- `NEVER` - если текущая транзакция есть, бросает исключение, выполняется не в транзакции
+- `NESTED` - с savepoints
+
+> В основном `propagation` = `REQUIRED` и `REQUIRES_NEW`
+
+Какие еще есть значения в `@Transactional`:
+- `isolation` - так же как в `sql`
+- `timeout`
+- `readonly` - если нет изменений, поставить для оптимизации, `default=false`
+- `rollbackFor` - для каких исключений делать ролбек,
+по умолчанию `RuntimeException` и `Error`
+- `noRollbackFor` - для каких исключений не делать ролбек
+
+> **`isolation` и `timeout` учитываются только в первой открытой транзакции,
+> если в ней открываются еще, то не учитываются**
+
+> Нужно ли ставить `@Transactional(readonly=true)` на read only методах?
+> 
+> Да:
+> 1. Гарантия `read-only` режима
+> 2. Единая транзакция для всех запросов в методе
+> 3. Можно задать `isolation` при желании
+
+### 10.4 Manual Transactions
+
+В контексте лежит бин `TransactionTemplate`, он может с помощью
+`execute` или `executeWithoutResult` запускать код в транзакции.
+То есть не обязательно весь метод оборачивать.
+
+> Чтобы не писать `@Transactional` над всеми классами тестов, можно
+> ее поставить над своей аннотацией `@IT` или `@ITDB`
