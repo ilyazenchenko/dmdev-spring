@@ -631,3 +631,38 @@ org.springframework.book:spring-boot-autoconfigure
 
 > Чтобы не писать `@Transactional` над всеми классами тестов, можно
 > ее поставить над своей аннотацией `@IT` или `@ITDB`
+
+## 11. Data JPA Repositories
+
+### 11.1 Repository
+Базовый репозиторий:
+```java
+interface MyRepo extends Repository<T, ID> 
+```
+> Можно не ставить аннотацию, spring-jpa создаст бин т.к. extends `Repository`
+
+Подключается класс `JpaRepositoriesAutoConfiguration`:
+![img.png](img.png)
+
+> В `Spring Boot` аннотация @EnableJpaRepositories идет из коробки, включать не надо
+
+### 11.2 RepositoryQuery
+
+В `Spring Data JPA` базовый класс-запроса – `RepositoryQuery`.
+Его реализации:
+
+![img_1.png](img_1.png)
+
+- `NamedQuery` – аннотация
+- `NativeJpaQuery` – нативный sql
+- `SimpleJpaQuery` – HQL
+- `PartTreeJpaQuery` - генерирует запросы по имени метода
+- `StoredProcedureJpaQuery` - вызов процедур, _легаси_
+
+Когда пишем просто имена методов в интерфейсе, используется прокси,
+только dynamic, а не через наследование
+
+Чтобы не писать в `Repository` популярные методы, типа `findById`, 
+есть наследники, в которых уже много чего есть:
+`Repository <- CrudRepository <- JpaRepository`,
+в них много готовых методов
