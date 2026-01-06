@@ -560,7 +560,7 @@ org.springframework.book:spring-boot-autoconfigure
 Можно управлять как-то вручную `TransactionTemplate`, но почти всегда декларативно`@Transactional`.
 Можно ставить в тестах и в коде:
 
-<img alt="img.png" src="img.png" width="700"/>
+<img alt="img.png" src="imgs/p10/img.png" width="700"/>
 
 Для работы с бд в тестах нужна `@Transactional`, иначе 
 метод-тест не будет помнить значения и будет `LazyInitializationException`.
@@ -575,7 +575,7 @@ org.springframework.book:spring-boot-autoconfigure
 Когда пишем `@Transactional`, спринг оборачивает бин в прокси,
 **а если делаем внутренний вызов, транзакция не откроется**: 
 
-![img_1.png](img_1.png)
+![img_1.png](imgs/p10/img_1.png)
 
 Это фиксится либо внедрением контекста, либо бина самому себе, 
 но это костыли, поэтому лучше не допускать такой логики.
@@ -590,7 +590,7 @@ org.springframework.book:spring-boot-autoconfigure
 
 В такой логике **_по умолчанию_** _новая транзакция не откроется_:
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/p10/img_2.png)
 
 Можно это изменить с помощью настройки `@Transactional` - `propagation`.
 Какие у `propagation` могут быть значения:
