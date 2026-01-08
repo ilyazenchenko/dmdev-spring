@@ -670,10 +670,10 @@ interface MyRepo extends Repository<T, ID>
 ### 11.3 PartTreeJpaQuery
 
 Делает из имен методов запросы. Под капотом - регулярки.
-<img alt="img_2.png" src="img_2.png" width="700"/>
+<img alt="img_2.png" src="imgs/p11/img_2.png" width="700"/>
 
 Как можно делать:
-<img alt="img_3.png" src="img_3.png" width="700"/>
+<img alt="img_3.png" src="imgs/p11/img_3.png" width="700"/>
 
 Все возможности - в доках ))
 
@@ -826,10 +826,10 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 2. Делаем поля для аудита, ставим аннотации (скрин):
 3. Не забываем `@MappedSuperclass`, чтобы hiber видел в наследниках их
 4. Добавляем `@EntityListeners(AuditingEntityListener.class)` <br/>
-   <img alt="img_26.png" src="img_26.png" width="600"/>
+   <img alt="img_26.png" src="imgs/p11/img_26.png" width="600"/>
 5. Ставим аннотацию `@EnableJpaAuditing`
 6. И добавляем бин `AuditorAware<тип created/modified by>`  <br/>
-   <img alt="img_27.png" src="img_27.png" width="500"/>
+   <img alt="img_27.png" src="imgs/p11/img_27.png" width="500"/>
 
 ### 11.14 Hibernate Envers
 
@@ -837,35 +837,35 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 (подробнее про него в курсе про `Hibernate`). Для этого:
 1. Подключить зависимость `spring-data-envers`
 2. Сделать сущность `Revision` <br/>
-   <img alt="img_28.png" src="img_28.png" width="500"/>
+   <img alt="img_28.png" src="imgs/p11/img_28.png" width="500"/>
 3. Поставить `@Audited` над сущностью: <br/>
-   <img alt="img_30.png" src="img_30.png" width="500"/> <br/>
-   <img alt="img_31.png" src="img_31.png" width="450"/>
+   <img alt="img_30.png" src="imgs/p11/img_30.png" width="500"/> <br/>
+   <img alt="img_31.png" src="imgs/p11/img_31.png" width="450"/>
 4. Создать таблицы
 5. Аннотацию: <br/>
-   <img alt="img_32.png" src="img_32.png" width="500"/>
+   <img alt="img_32.png" src="imgs/p11/img_32.png" width="500"/>
 
 > Чтобы опять же не плодить репозитории, унаследуем наш репо от RevisionRepository<T, ID, RID>: <br/>
-> <img alt="img_33.png" src="img_33.png" width="500"/> <br>
+> <img alt="img_33.png" src="imgs/p11/img_33.png" width="500"/> <br>
 > Теперь доступны методы: <br>
-> <img alt="img_34.png" src="img_34.png" width="700"/>
+> <img alt="img_34.png" src="imgs/p11/img_34.png" width="700"/>
 
 ### 11.15 - Querydsl
 
 Удобная библиотека, например для формирования динамических sql-запросов.
 
 Когда корректно подключена, при компиляции формирует свои классы `Entity`: <br>
-<img alt="img_35.png" src="img_35.png" width="300"/>
+<img alt="img_35.png" src="imgs/p11/img_35.png" width="300"/>
 
 Делаем наш класс для удобства:<br>
-<img alt="img_36.png" src="img_36.png" width="600"/>
+<img alt="img_36.png" src="imgs/p11/img_36.png" width="600"/>
 
 Теперь можем удобно делать например динанические запросы (используется именно QUser):
 
 <img alt="img_37.png" src="imgs/p11/img_37.png" width="600"/>
 
 > Spring имеет поддержку Querydsl, можно имплементнуть интерфейс:
-> <img alt="img_38.png" src="img_38.png" width="500"/>
+> <img alt="img_38.png" src="imgs/p11/img_38.png" width="500"/>
 >
 > И он предоставит возможности работы с Querydsl, например: <br>
-> <img alt="img_39.png" src="img_39.png" width="400"/>
+> <img alt="img_39.png" src="imgs/p11/img_39.png" width="400"/>
