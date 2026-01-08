@@ -705,6 +705,12 @@ interface MyRepo extends Repository<T, ID>
 
 <img alt="img_6.png" src="img_6.png" width="700"/>
 
+> `@Query` имеет приоритет над `PartTreeJpaQuery` и `@NamedQuery`
+
+> `HQL` запрос лучше, чем `native sql`, так как:
+> 1. Теряем в производительности
+> 2. Не можем использовать `join fetch`
+> 3. Не можем использовать `EntityGraph`
 ### 11.6 @Modifying
 По умолчанию `@Query` только для чтения!
 Чтобы можно было изменять, нужно поставить аннотацию `@Modifying`:
@@ -716,9 +722,150 @@ interface MyRepo extends Repository<T, ID>
 > Так как `PersistenceContext` работает как кеш, он не увидит изменения
 > после этого метода. Чтобы исправить, нужно поставить:
 > 
-> ![img_9.png](img_9.png)
+> <img alt="img_9.png" src="img_9.png" width="700"/>
 > 
 > После этого важно работать именно с _новыми сущностями_, 
 > соединения старых закроются, при обращении к связанным
 > сущностям будет `LazyInitializationException`
 
+### 11.7 Special Parameters
+```java
+// Можно все писать с помощью PartTreeJpaQuery:
+List<User> findTop3ByBirthDateBefore0rderByBirthDateDesc(LocalDate birthDate);
+// Но это слишком объемно. Можно добавлять параметр Sort
+List<User> findTop3ByBirlthDateBefore(LocalDate birthDate, Sort sort);
+// Создание:
+Sort sort = Sort.sort(User.class)
+              .by(User::getFirstname)
+              .and(sort.by(User::getLastname))
+              .descending();
+
+// Также можно делать аргумент Pageable (может содержать сортировку)
+List<User> findAllBy(Pageable pageable);
+// Создание: PageRequest.of(page, size, sort)
+var pageable = PageRequest.of(0, 2, Sort.by("id")); 
+```
+
+### 11.8 Page & Slice
+
+Для пагинации удобно использовать не `List`, а `Slice` и `Page` (`Slice <- Page`). 
+`Page` лучше, содержит кол-во страниц (с помощью `count`).
+
+Можно делать `while (page.hasNext()) { repo.findAll(page.nextPageable()) }`.
+
+Чтобы понять кол-во страниц, используется `count`, в `@Query` его можно переопределять:
+
+<img alt="img_11.png" src="img_11.png" width="700"/>
+
+### 11.9 @EntityGraph
+
+С помощью `@EntityGraph` можно гибко регулировать `fetch eager/lazy`, но **Pageable
+будет работать неправильно !!!**
+
+<img alt="img_12.png" src="img_12.png" width="700"/>
+
+### 11.10 @Lock & @QueryHints
+
+Рассмотрим 2 оставшиеся аннотации, которые позволяют не прибегать к работе с
+`EntityManager`:
+- `@QueryHints` - позволяет устанавливать доп параметры запроса
+- `@Lock` - блокировки (подробнее на курсе по `Hibernate`)
+
+<img alt="img_13.png" src="img_13.png" width="700"/>
+
+### 11.11 Projections
+Можно сделать кастомный класс с полями:
+
+<img alt="img_14.png" src="img_14.png" width="548"/>
+
+И писать запрос с ним:
+
+<img alt="img_15.png" src="img_15.png" width="580"/>
+
+Можно даже писать под разные `projections` с дженериками
+
+<img alt="img_16.png" src="img_16.png" width="657"/>
+
+Для более сложных вариантов можно делать с интерфейсом - реализовать геттеры: 
+
+<img alt="img_17.png" src="img_17.png" width="387"/>
+
+Тогда нужно настроить поля с помощью `native query`:
+
+<img alt="img_18.png" src="img_18.png" width="590"/>
+
+Для вычислимых полей можно использовать `@Value`:
+
+<img alt="img_19.png" src="img_19.png" width="541"/>
+
+### 11.12 Custom Repository Implementation
+
+Как сделать свой репозиторий с кастомной имплементацией какого то метода, 
+но не плодить бины и обращаться к существующим `jpa репозиториям`?
+
+Например, хотим все фильтры передавать в одном объекте и динамически добавлять в запрос:
+1. Делаем объект-фильтр <br/>
+![img_20.png](img_20.png)
+2. Делаем интерфейс с нужным методом <br/>
+![img_21.png](img_21.png)
+3. Пишем реализацию. В нее можем добавлять бины, и тп. **Обязательно постфикс именно `Impl`** <br/>
+![img_22.png](img_22.png)
+4. Экстендим существующий `jpa репо` новым <br/>
+![img_23.png](img_23.png)
+5. Вуаля <br/>
+![img_24.png](img_24.png)
+
+> Spring увидит постфикс и вызовет нужный метод из  Impl сам.
+> Так как в `@EnableJpaRepositories` свойство:
+> ![img_25.png](img_25.png)
+
+### 11.13 JPA Auditing
+
+В спринге можно автоматизировать аудит сущностей.
+1. Делаем абстрактный класс сущности, от которого будем наследовать наши сущности
+2. Делаем поля для аудита, ставим аннотации (скрин):
+3. Не забываем `@MappedSuperclass`, чтобы hiber видел в наследниках их
+4. Добавляем `@EntityListeners(AuditingEntityListener.class)` <br/>
+   <img alt="img_26.png" src="img_26.png" width="600"/>
+5. Ставим аннотацию `@EnableJpaAuditing`
+6. И добавляем бин `AuditorAware<тип created/modified by>`  <br/>
+   <img alt="img_27.png" src="img_27.png" width="500"/>
+
+### 11.14 Hibernate Envers
+
+Можно отслеживать не только метаинфу, но и изменения самих полей. Для этого есть механизм `Hibernate Envers`
+(подробнее про него в курсе про `Hibernate`). Для этого:
+1. Подключить зависимость `spring-data-envers`
+2. Сделать сущность `Revision` <br/>
+   <img alt="img_28.png" src="img_28.png" width="500"/>
+3. Поставить `@Audited` над сущностью: <br/>
+   <img alt="img_30.png" src="img_30.png" width="500"/> <br/>
+   <img alt="img_31.png" src="img_31.png" width="450"/>
+4. Создать таблицы
+5. Аннотацию: <br/>
+   <img alt="img_32.png" src="img_32.png" width="500"/>
+
+> Чтобы опять же не плодить репозитории, унаследуем наш репо от RevisionRepository<T, ID, RID>: <br/>
+> <img alt="img_33.png" src="img_33.png" width="500"/> <br>
+> Теперь доступны методы: <br>
+> <img alt="img_34.png" src="img_34.png" width="700"/>
+
+### 11.15 - Querydsl
+
+Удобная библиотека, например для формирования динамических sql-запросов.
+
+Когда корректно подключена, при компиляции формирует свои классы `Entity`: <br>
+<img alt="img_35.png" src="img_35.png" width="300"/>
+
+Делаем наш класс для удобства:<br>
+<img alt="img_36.png" src="img_36.png" width="600"/>
+
+Теперь можем удобно делать например динанические запросы (используется именно QUser):
+
+<img alt="img_37.png" src="img_37.png" width="600"/>
+
+> Spring имеет поддержку Querydsl, можно имплементнуть интерфейс:
+> <img alt="img_38.png" src="img_38.png" width="500"/>
+>
+> И он предоставит возможности работы с Querydsl, например: <br>
+> <img alt="img_39.png" src="img_39.png" width="400"/>
