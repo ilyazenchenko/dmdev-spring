@@ -944,3 +944,65 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 Ему еще можно добавить `@Sql`, и от него наследовать интеграционные тесты
 
 > `@DynamicPropertySource` - перед стартом тестов положить в `properties` какое-то значение, здесь например `url бдшки`
+
+## 14. Database migrations
+
+### 14.1 Liquibase. Теория
+
+> Автонакат от `Hibernate` - не очень, теряем много контроля, лучше использовать `db migrations`
+
+Общий принцип работы `Liquibase`: 
+
+<img alt="img_1.png" src="img_1.png" width="600"/>
+
+1. Лочит бд
+2. Смотрит на поля `id, author, filename,` не было ли уже такого скрипта, если был - игнорит
+3. Проверяет `md5sum` (= файл, закодированный с помощью `md5`), то есть
+не был ли изменен файл. Если был – бросает исключение.
+
+Структура файлов:
+
+<img alt="img_2.png" src="img_2.png" width="1100"/>
+
+> Так как `changeset = 1 transaction`, best practice - делать в одном `changeset` один `change`
+
+### 14.2 Liquibase. Практика
+
+Подключаем зависимость `liquibase`. 
+
+```java
+// Spring Boot содержит класс LiquibaseAutoConfiguration с бинами, она включается, если видит
+// зависимость и классы, как и с остальными библиотеками
+
+@AutoConfiguration(
+    after = {DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class}
+)
+@ConditionalOnClass({SpringLiquibase.class, DatabaseChange.class})
+@ConditionalOnProperty(
+    prefix = "spring.liquibase",
+    name = {"enabled"},
+    matchIfMissing = true
+)
+@Conditional({LiquibaseDataSourceCondition.class})
+@Import({DatabaseInitializationDependencyConfigurer.class})
+@ImportRuntimeHints({LiquibaseAutoConfigurationRuntimeHints.class})
+public class LiquibaseAutoConfiguration {
+```
+
+Создаем файлы:
+
+<img alt="img_4.png" src="img_4.png" width="300"/>
+
+`db.changelog-master.yaml`:
+
+<img alt="img_5.png" src="img_5.png" width="400"/>
+
+В соответствии в best practice, `1 change = 1 changeset = 1 transaction` <br>
+
+<img alt="img_6.png" src="img_6.png" width="700"/>
+
+> Если в скрипте была ошибка, и его нужно изменить, 
+> можем удалить запись из таблицы `databasechangelog`,
+> или обновить в значение `md5sum` на новое (из ошибки)
+
+> В хибере можно оставить `ddl-auto=validate`
