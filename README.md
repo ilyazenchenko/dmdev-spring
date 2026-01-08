@@ -883,37 +883,37 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 > С Entity не работает, так как не `Hibernate`
 
 Пример: <br>
-<img alt="img.png" src="img.png" width="700"/>
+<img alt="img.png" src="imgs/p12/img.png" width="700"/>
 
 > Видеть параметры запроса **jdbcTemplate**: <br>
-<img alt="img_1.png" src="img_1.png" width="400"/>
+<img alt="img_1.png" src="imgs/p12/img_1.png" width="400"/>
 
 ### 12.2 Batch size & Fetch size
 
-<img alt="img_2.png" src="img_2.png" width="700"/>
+<img alt="img_2.png" src="imgs/p12/img_2.png" width="700"/>
 
 Проблема: нужно вставить/удалить/проапдейтить более одной записи. Чтобы не писать для каждой 
 `insert` и т п, используются batch-запросы. То есть пачкой.
 
 Пример на чистом `JdbcTemplate`:
 
-<img alt="img_3.png" src="img_3.png" width="500"/>
+<img alt="img_3.png" src="imgs/p12/img_3.png" width="500"/>
 
-<img alt="img_4.png" src="img_4.png" width="800"/>
+<img alt="img_4.png" src="imgs/p12/img_4.png" width="800"/>
 
 С именованными параметрами:
 
-<img alt="img_5.png" src="img_5.png" width="500"/>
+<img alt="img_5.png" src="imgs/p12/img_5.png" width="500"/>
 
-<img alt="img_6.png" src="img_6.png" width="650"/>
+<img alt="img_6.png" src="imgs/p12/img_6.png" width="650"/>
 
 Есть также `fetch size` - то же самое, что `batch`, только для `select` запросов, то есть читать
 с бд порционно, чтобы например память не захламлять:
 
-<img alt="img_8.png" src="img_8.png" width="700"/>
+<img alt="img_8.png" src="imgs/p12/img_8.png" width="700"/>
 
 > Также можно настройкой установить `batch size` и `fetch size` в `Hibernate`: <br>
-<img alt="img_7.png" src="img_7.png" width="300"/>
+<img alt="img_7.png" src="imgs/p12/img_7.png" width="300"/>
 
 ## 13. Databases in tests
 
@@ -925,7 +925,7 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 
 Добавляем аннотацию `@Sql`, она будет накатывать скрипт _перед каждым тестом_:
 
-<img alt="img_9.png" src="img_9.png" width="300"/>
+<img alt="img_9.png" src="imgs/p13/img_9.png" width="300"/>
 
 Делаем класс `@Transactional`, и после каждого теста у нас по умолчанию откат (ролбек) - 
 то, что нужно. 
