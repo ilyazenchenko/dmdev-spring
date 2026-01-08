@@ -642,7 +642,7 @@ interface MyRepo extends Repository<T, ID>
 > Можно не ставить аннотацию, spring-jpa создаст бин т.к. extends `Repository`
 
 Подключается класс `JpaRepositoriesAutoConfiguration`:
-![img.png](img.png)
+![img.png](imgs/p11/img.png)
 
 > В `Spring Boot` аннотация @EnableJpaRepositories идет из коробки, включать не надо
 
@@ -651,7 +651,7 @@ interface MyRepo extends Repository<T, ID>
 В `Spring Data JPA` базовый класс-запроса – `RepositoryQuery`.
 Его реализации:
 
-<img alt="img_1.png" src="img_1.png" width="700"/>
+<img alt="img_1.png" src="imgs/p11/img_1.png" width="700"/>
 
 - `NamedQuery` – аннотация
 - `NativeJpaQuery` – нативный sql
@@ -686,7 +686,7 @@ interface MyRepo extends Repository<T, ID>
 Ставим аннотацию _над сущностью, пишем имя (формат `Entity.name`)
 и сам запрос (`HQL`). 
 
-<img alt="img_4.png" src="img_4.png" width="700"/>
+<img alt="img_4.png" src="imgs/p11/img_4.png" width="700"/>
 
 В репозитории также пишем метод с таким же именем как name. 
 
@@ -696,14 +696,14 @@ interface MyRepo extends Repository<T, ID>
 ### 11.5 @Query
 Аннотация работает с `SimpleJpaQuery` и `NativeJpaQuery`:
 
-<img alt="img_5.png" src="img_5.png" width="700"/>
+<img alt="img_5.png" src="imgs/p11/img_5.png" width="700"/>
 
 > `Spring Data Jpa` (не `Hibernate`) позволяет писать проценты вокруг
 > параметров, без доп знаков (картинка выше)
 
 Удобно сразу достать необходимые сущности с помощью `join fetch`:
 
-<img alt="img_6.png" src="img_6.png" width="700"/>
+<img alt="img_6.png" src="imgs/p11/img_6.png" width="700"/>
 
 > `@Query` имеет приоритет над `PartTreeJpaQuery` и `@NamedQuery`
 
@@ -715,14 +715,14 @@ interface MyRepo extends Repository<T, ID>
 По умолчанию `@Query` только для чтения!
 Чтобы можно было изменять, нужно поставить аннотацию `@Modifying`:
 
-<img alt="img_8.png" src="img_8.png" width="700"/>
+<img alt="img_8.png" src="imgs/p11/img_8.png" width="700"/>
 
 Есть свойста `clearAutomatically` и `flushAutomatically`:
 
 > Так как `PersistenceContext` работает как кеш, он не увидит изменения
 > после этого метода. Чтобы исправить, нужно поставить:
 > 
-> <img alt="img_9.png" src="img_9.png" width="700"/>
+> <img alt="img_9.png" src="imgs/p11/img_9.png" width="700"/>
 > 
 > После этого важно работать именно с _новыми сущностями_, 
 > соединения старых закроются, при обращении к связанным
@@ -755,14 +755,14 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 
 Чтобы понять кол-во страниц, используется `count`, в `@Query` его можно переопределять:
 
-<img alt="img_11.png" src="img_11.png" width="700"/>
+<img alt="img_11.png" src="imgs/p11/img_11.png" width="700"/>
 
 ### 11.9 @EntityGraph
 
 С помощью `@EntityGraph` можно гибко регулировать `fetch eager/lazy`, но **Pageable
 будет работать неправильно !!!**
 
-<img alt="img_12.png" src="img_12.png" width="700"/>
+<img alt="img_12.png" src="imgs/p11/img_12.png" width="700"/>
 
 ### 11.10 @Lock & @QueryHints
 
@@ -771,32 +771,32 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 - `@QueryHints` - позволяет устанавливать доп параметры запроса
 - `@Lock` - блокировки (подробнее на курсе по `Hibernate`)
 
-<img alt="img_13.png" src="img_13.png" width="700"/>
+<img alt="img_13.png" src="imgs/p11/img_13.png" width="700"/>
 
 ### 11.11 Projections
 Можно сделать кастомный класс с полями:
 
-<img alt="img_14.png" src="img_14.png" width="548"/>
+<img alt="img_14.png" src="imgs/p11/img_14.png" width="548"/>
 
 И писать запрос с ним:
 
-<img alt="img_15.png" src="img_15.png" width="580"/>
+<img alt="img_15.png" src="imgs/p11/img_15.png" width="580"/>
 
 Можно даже писать под разные `projections` с дженериками
 
-<img alt="img_16.png" src="img_16.png" width="657"/>
+<img alt="img_16.png" src="imgs/p11/img_16.png" width="657"/>
 
 Для более сложных вариантов можно делать с интерфейсом - реализовать геттеры: 
 
-<img alt="img_17.png" src="img_17.png" width="387"/>
+<img alt="img_17.png" src="imgs/p11/img_17.png" width="387"/>
 
 Тогда нужно настроить поля с помощью `native query`:
 
-<img alt="img_18.png" src="img_18.png" width="590"/>
+<img alt="img_18.png" src="imgs/p11/img_18.png" width="590"/>
 
 Для вычислимых полей можно использовать `@Value`:
 
-<img alt="img_19.png" src="img_19.png" width="541"/>
+<img alt="img_19.png" src="imgs/p11/img_19.png" width="541"/>
 
 ### 11.12 Custom Repository Implementation
 
@@ -805,19 +805,19 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 
 Например, хотим все фильтры передавать в одном объекте и динамически добавлять в запрос:
 1. Делаем объект-фильтр <br/>
-![img_20.png](img_20.png)
+![img_20.png](imgs/p11/img_20.png)
 2. Делаем интерфейс с нужным методом <br/>
-![img_21.png](img_21.png)
+![img_21.png](imgs/p11/img_21.png)
 3. Пишем реализацию. В нее можем добавлять бины, и тп. **Обязательно постфикс именно `Impl`** <br/>
-![img_22.png](img_22.png)
+![img_22.png](imgs/p11/img_22.png)
 4. Экстендим существующий `jpa репо` новым <br/>
-![img_23.png](img_23.png)
+![img_23.png](imgs/p11/img_23.png)
 5. Вуаля <br/>
-![img_24.png](img_24.png)
+![img_24.png](imgs/p11/img_24.png)
 
 > Spring увидит постфикс и вызовет нужный метод из  Impl сам.
 > Так как в `@EnableJpaRepositories` свойство:
-> ![img_25.png](img_25.png)
+> ![img_25.png](imgs/p11/img_25.png)
 
 ### 11.13 JPA Auditing
 
@@ -862,7 +862,7 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 
 Теперь можем удобно делать например динанические запросы (используется именно QUser):
 
-<img alt="img_37.png" src="img_37.png" width="600"/>
+<img alt="img_37.png" src="imgs/p11/img_37.png" width="600"/>
 
 > Spring имеет поддержку Querydsl, можно имплементнуть интерфейс:
 > <img alt="img_38.png" src="img_38.png" width="500"/>
