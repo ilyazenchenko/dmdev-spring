@@ -1006,3 +1006,62 @@ public class LiquibaseAutoConfiguration {
 > или обновить в значение `md5sum` на новое (из ошибки)
 
 > В хибере можно оставить `ddl-auto=validate`
+
+## 15. Web Starter
+
+### 15.1 Введение
+
+Общая структура `Spring Web MVC`:
+
+<img alt="img.png" src="img.png" width="500"/>
+
+> `Spring`, в отличие от `JavaEE`, предоставляет `Dispatcher Servlet`, который маппит
+> запросы к нужным контроллерам
+
+В отличие от `JavaEE`, где приложение собиралось в `war` и деплоилось в `Apache Tomcat`,
+`Spring Web` содержит `Embedded Tomcat`, и запускается именно `jar`, а внутри у него
+`Tomcat`.
+
+Но `Embedded Tomcat` имеет меньший функционал (мб чтобы был легковеснее), 
+например по умолчанию у него нет `Jasper (JSP Engine)`, нужно подключать отдельно
+
+<img alt="img_1.png" src="img_1.png" width="800"/>
+
+Из чего состоит `web starter`:
+
+<img alt="img_2.png" src="img_2.png" width="900"/>
+
+При запуске приложение не остановилось после выполнения, отсюда 2 важных момента:
+
+1. Когда подключаем зависимость `web`, spring запускает отдельный `не daemon` поток:
+   <img alt="img_3.png" src="img_3.png" width="700"/>
+2. И с помощью `Spring Boot` все настраивается само:
+   <img alt="img_4.png" src="img_4.png" width="800"/>
+
+### 15.2 Dispatcher Servlet
+
+Как запрос обрабатывается `Tomcat`:
+
+<img alt="img_5.png" src="img_5.png" width="700"/>
+
+Что происходит в `Dispatcher Servlet (DS)`:
+
+<img alt="img_6.png" src="img_7.png" width="1200"/>
+
+> С зависимостью `Spring Web`, у нас создается именно `WebApplicationContext`
+
+### 15.3 Первый контроллер
+
+Посмотрим, как в `Spring работать с JSP страницами`.
+
+1. Подключаем `jasper`, так как в `embedded tomcat` его нет
+2. Покажем, где будут лежать наши страницы, относительно `src/webapp`: <br>
+   <img alt="img_8.png" src="img_8.png" width="250"/>
+3. Пишем `.jsp файлы` и сам контроллер. Как и указано в диаграмме `DS`, 
+возвращает объект `ModelAndView`: <br> <img alt="img_9.png" src="img_9.png" width="800"/>
+
+> Видим, что вместо создания `ModelAndView` можно внедрить его с помощью `DS`.
+> Т. к. его `HandlerAdapter` `HandlerMethodArgumentResolveры`
+> имеют доступ к `WebApplicationContext`, могут внедрять что угодно в наш метод:
+> бины, запрос, что-то из запроса, и так далее.
+
