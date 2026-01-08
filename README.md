@@ -939,7 +939,7 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 Если написать `@Testcontainers` над классом, она для каждого класса создаст docker контейнер.
 Это не очень. Лучше так:
 
-<img alt="img.png" src="img.png" width="900"/>
+<img alt="img.png" src="imgs/p14/img.png" width="900"/>
 
 Ему еще можно добавить `@Sql`, и от него наследовать интеграционные тесты
 
@@ -953,7 +953,7 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 
 Общий принцип работы `Liquibase`: 
 
-<img alt="img_1.png" src="img_1.png" width="600"/>
+<img alt="img_1.png" src="imgs/p14/img_1.png" width="600"/>
 
 1. Лочит бд
 2. Смотрит на поля `id, author, filename,` не было ли уже такого скрипта, если был - игнорит
@@ -962,7 +962,7 @@ var pageable = PageRequest.of(0, 2, Sort.by("id"));
 
 Структура файлов:
 
-<img alt="img_2.png" src="img_2.png" width="1100"/>
+<img alt="img_2.png" src="imgs/p14/img_2.png" width="1100"/>
 
 > Так как `changeset = 1 transaction`, best practice - делать в одном `changeset` один `change`
 
@@ -991,15 +991,15 @@ public class LiquibaseAutoConfiguration {
 
 Создаем файлы:
 
-<img alt="img_4.png" src="img_4.png" width="300"/>
+<img alt="img_4.png" src="imgs/p14/img_4.png" width="300"/>
 
 `db.changelog-master.yaml`:
 
-<img alt="img_5.png" src="img_5.png" width="400"/>
+<img alt="img_5.png" src="imgs/p14/img_5.png" width="400"/>
 
 В соответствии в best practice, `1 change = 1 changeset = 1 transaction` <br>
 
-<img alt="img_6.png" src="img_6.png" width="700"/>
+<img alt="img_6.png" src="imgs/p14/img_6.png" width="700"/>
 
 > Если в скрипте была ошибка, и его нужно изменить, 
 > можем удалить запись из таблицы `databasechangelog`,
