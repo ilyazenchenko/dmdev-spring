@@ -1017,7 +1017,7 @@ public class LiquibaseAutoConfiguration {
 
 Общая структура `Spring Web MVC`:
 
-<img alt="img.png" src="img.png" width="500"/>
+<img alt="img.png" src="imgs/p15/img.png" width="500"/>
 
 > `Spring`, в отличие от `JavaEE`, предоставляет `Dispatcher Servlet`, который маппит
 > запросы к нужным контроллерам
@@ -1029,28 +1029,28 @@ public class LiquibaseAutoConfiguration {
 Но `Embedded Tomcat` имеет меньший функционал (мб чтобы был легковеснее), 
 например по умолчанию у него нет `Jasper (JSP Engine)`, нужно подключать отдельно
 
-<img alt="img_1.png" src="img_1.png" width="800"/>
+<img alt="img_1.png" src="imgs/p15/img_1.png" width="800"/>
 
 Из чего состоит `web starter`:
 
-<img alt="img_2.png" src="img_2.png" width="900"/>
+<img alt="img_2.png" src="imgs/p15/img_2.png" width="900"/>
 
 При запуске приложение не остановилось после выполнения, отсюда 2 важных момента:
 
 1. Когда подключаем зависимость `web`, spring запускает отдельный `не daemon` поток:
-   <img alt="img_3.png" src="img_3.png" width="700"/>
+   <img alt="img_3.png" src="imgs/p15/img_3.png" width="700"/>
 2. И с помощью `Spring Boot` все настраивается само:
-   <img alt="img_4.png" src="img_4.png" width="800"/>
+   <img alt="img_4.png" src="imgs/p15/img_4.png" width="800"/>
 
 ### 15.2 Dispatcher Servlet
 
 Как запрос обрабатывается `Tomcat`:
 
-<img alt="img_5.png" src="img_5.png" width="700"/>
+<img alt="img_5.png" src="imgs/p15/img_5.png" width="700"/>
 
 Что происходит в `Dispatcher Servlet (DS)`:
 
-<img alt="img_6.png" src="img_7.png" width="1200"/>
+<img alt="img_6.png" src="imgs/p15/img_7.png" width="1200"/>
 
 > С зависимостью `Spring Web`, у нас создается именно `WebApplicationContext`
 
@@ -1062,9 +1062,9 @@ public class LiquibaseAutoConfiguration {
 
 1. Подключаем `jasper`, так как в `embedded tomcat` его нет
 2. Покажем, где будут лежать наши страницы, относительно `src/webapp`: <br>
-   <img alt="img_8.png" src="img_8.png" width="250"/>
+   <img alt="img_8.png" src="imgs/p15/img_8.png" width="250"/>
 3. Пишем `.jsp файлы` и сам контроллер. Как и указано в диаграмме `DS`, 
-возвращает объект `ModelAndView`: <br> <img alt="img_9.png" src="img_9.png" width="800"/>
+возвращает объект `ModelAndView`: <br> <img alt="img_9.png" src="imgs/p15/img_9.png" width="800"/>
 
 > Видим, что вместо создания `ModelAndView` можно внедрить его с помощью `DS`.
 > Т. к. его `HandlerAdapter` `HandlerMethodArgumentResolveры`
@@ -1075,17 +1075,17 @@ public class LiquibaseAutoConfiguration {
 
 Как выглядит `HTTP`-запрос:
 
-<img alt="img_10.png" src="img_10.png" width="1200"/>
+<img alt="img_10.png" src="imgs/p15/img_10.png" width="1200"/>
 
 > По умолчанию для `http` порт `80`, для `https` - `443`
 
 Чтобы смаппить запрос на метод, можно сделать так:
 
-<img alt="img_11.png" src="img_11.png" width="700"/>
+<img alt="img_11.png" src="imgs/p15/img_11.png" width="700"/>
 
 Но удобнее так:
 
-<img alt="img_12.png" src="img_12.png" width="300"/>
+<img alt="img_12.png" src="imgs/p15/img_12.png" width="300"/>
 
 > `@GetMapping` под капотом просто `@RequestMapping` с `method = GET`
 
@@ -1093,7 +1093,7 @@ public class LiquibaseAutoConfiguration {
 
 Пример обработки запроса:
 
-<img alt="img_13.png" src="img_13.png" width="800"/>
+<img alt="img_13.png" src="imgs/p15/img_13.png" width="800"/>
 
 > Если `ключ параметра` итп совпадает с `именем аргумента метода`, можно в `аннотации` его не писать
 
@@ -1106,21 +1106,21 @@ public class LiquibaseAutoConfiguration {
 
 Есть атрибуты сессии и запроса:
 
-<img alt="img_14.png" src="img_14.png" width="800"/>
+<img alt="img_14.png" src="imgs/p15/img_14.png" width="800"/>
 
 > По умолчанию у атрибута `@Scope = request`
 
 Установить атрибут:
 
-<img alt="img_15.png" src="img_15.png" width="800"/>
+<img alt="img_15.png" src="imgs/p15/img_15.png" width="800"/>
 
 Чтобы устанавливать сессионные атрибуты, нужно над классом поставить аннотацию:
 
-<img alt="img_16.png" src="img_16.png" width="400"/>
+<img alt="img_16.png" src="imgs/p15/img_16.png" width="400"/>
 
 Spring сам будет ставить их как сессионные. Доставать:
 
-<img alt="img_17.png" src="img_17.png" width="700"/>
+<img alt="img_17.png" src="imgs/p15/img_17.png" width="700"/>
 
 ### 15.7 @ModelAttribute
 
@@ -1130,18 +1130,19 @@ Spring сам будет ставить их как сессионные. Дос
 
 Также можно получать данные из форм или параметров запроса, при этом необязательно даже
 писать `@ModelAttribute`, `Spring` сам все смаппит <br>
-<img alt="img_18.png" src="img_18.png" width="700"/>
+
+<img alt="img_18.png" src="imgs/p15/img_18.png" width="700"/>
 
 Также можно поставить над методом, тогда _**результат будет добавляться в модель при каждом
 запросе**_
 
-<img alt="img_19.png" src="img_19.png" width="400"/>
+<img alt="img_19.png" src="imgs/p15/img_19.png" width="400"/>
 
 ### 15.8 Forward, Include, Redirect
 
 Это 3 основных способа перенаправления:
 
-<img alt="img_21.png" src="img_21.png" width="450"/>
+<img alt="img_21.png" src="imgs/p15/img_21.png" width="450"/>
 
 > Когда происходит `редирект`, браузеру возвращается `302` код
 
@@ -1149,7 +1150,7 @@ Spring сам будет ставить их как сессионные. Дос
 
 Делается так:
 
-<img alt="img_22.png" src="img_22.png" width="800"/>
+<img alt="img_22.png" src="imgs/p15/img_22.png" width="800"/>
 
 ### 15.9 CRUD. API Design
 
@@ -1180,14 +1181,14 @@ Best-practices
 
 Пример теста с отправкой `Http запросов`:
 
-<img alt="img_23.png" src="img_23.png" width="700"/>
+<img alt="img_23.png" src="imgs/p15/img_23.png" width="700"/>
 
 Чтобы не открывать транзакции на `view`-слое (в контроллерах), поставим настройку:
 `spring.jpa.open-in-view=false`, и сохраним `@Transactional` над методами
 
 Пример более сложного теста:
 
-<img alt="img_24.png" src="img_24.png" width="550"/>
+<img alt="img_24.png" src="imgs/p15/img_24.png" width="550"/>
 
 ### 15.12 Type Converters
 
@@ -1196,5 +1197,5 @@ Best-practices
 1. `spring.mvc.format.date=iso`
 2. Над полем `dto` поставить `@DateTimeFormat(pattern="yyyy-MM-dd")`
 3. Переопределить `WebMvcConfigurer`:
-   <img alt="img_25.png" src="img_25.png" width="800"/>
+   <img alt="img_25.png" src="imgs/p15/img_25.png" width="800"/>
 
