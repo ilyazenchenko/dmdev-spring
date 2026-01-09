@@ -356,6 +356,9 @@ org.springframework.book:spring-boot-autoconfigure
 - `@NonNull`: на аргументе метода будет проверять и кидать `NPE` если передан `null` с именем аргумента
 - `@SneakyThrows`: может быть полезна в лямбдах
 - `@RequiredArgsConstructor`: конструктор для `@NonNull` и `final` полей
+- `@Value`: неизменяемый вариант `@Data`. Все поля `private` и `final`, сеттеры не 
+генерируются, класс помечается `final`. Также создаются `toString()`, `equals()` и `hashCode()`.
+- `@FieldNameConstants`: Делает `String` константы для каждого поля по его названию
 
 > Как с помощью `lombok` сделать конструктор для `final`-полей `@Value`?
 > 1. Делам lombok.config:
@@ -622,6 +625,7 @@ org.springframework.book:spring-boot-autoconfigure
 > 1. Гарантия `read-only` режима
 > 2. Единая транзакция для всех запросов в методе
 > 3. Можно задать `isolation` при желании
+> 4. Оптимизация **И** БД **И** `Hibernate` (не делает `flush` после транзакции)
 
 ### 10.4 Manual Transactions
 
@@ -1050,6 +1054,8 @@ public class LiquibaseAutoConfiguration {
 
 > С зависимостью `Spring Web`, у нас создается именно `WebApplicationContext`
 
+> В `Spring` сервлет только один - `DS`. Он уже перенаправляет все запросы на контроллеры
+
 ### 15.3 Первый контроллер
 
 Посмотрим, как в `Spring работать с JSP страницами`.
@@ -1064,4 +1070,131 @@ public class LiquibaseAutoConfiguration {
 > Т. к. его `HandlerAdapter` `HandlerMethodArgumentResolveры`
 > имеют доступ к `WebApplicationContext`, могут внедрять что угодно в наш метод:
 > бины, запрос, что-то из запроса, и так далее.
+
+### 15.4 @RequestMapping
+
+Как выглядит `HTTP`-запрос:
+
+<img alt="img_10.png" src="img_10.png" width="1200"/>
+
+> По умолчанию для `http` порт `80`, для `https` - `443`
+
+Чтобы смаппить запрос на метод, можно сделать так:
+
+<img alt="img_11.png" src="img_11.png" width="700"/>
+
+Но удобнее так:
+
+<img alt="img_12.png" src="img_12.png" width="300"/>
+
+> `@GetMapping` под капотом просто `@RequestMapping` с `method = GET`
+
+### 15.5 Parameters, Headers, Cookies
+
+Пример обработки запроса:
+
+<img alt="img_13.png" src="img_13.png" width="800"/>
+
+> Если `ключ параметра` итп совпадает с `именем аргумента метода`, можно в `аннотации` его не писать
+
+> Всю эту логику по внедрению и касту аргументов методов делает `DS` в методе 
+> `doDispatch()` с помощью `HandlerMethodArgumentResolvers`
+> 
+> P.S. Есть `HandlerMethodArgumentResolver` даже для `QueryDslPredicate` ))
+
+### 15.6 Model
+
+Есть атрибуты сессии и запроса:
+
+<img alt="img_14.png" src="img_14.png" width="800"/>
+
+> По умолчанию у атрибута `@Scope = request`
+
+Установить атрибут:
+
+<img alt="img_15.png" src="img_15.png" width="800"/>
+
+Чтобы устанавливать сессионные атрибуты, нужно над классом поставить аннотацию:
+
+<img alt="img_16.png" src="img_16.png" width="400"/>
+
+Spring сам будет ставить их как сессионные. Доставать:
+
+<img alt="img_17.png" src="img_17.png" width="700"/>
+
+### 15.7 @ModelAttribute
+
+Вместо того, чтобы возвращать `ModelAndView`, можно внедрять модель, устанавливать
+все ее `атрибуты`, а возвращать просто `String` - название `view`.
+**Этим как раз занимается `HandlerMethodReturnValueHandler`**
+
+Также можно получать данные из форм или параметров запроса, при этом необязательно даже
+писать `@ModelAttribute`, `Spring` сам все смаппит <br>
+<img alt="img_18.png" src="img_18.png" width="700"/>
+
+Также можно поставить над методом, тогда _**результат будет добавляться в модель при каждом
+запросе**_
+
+<img alt="img_19.png" src="img_19.png" width="400"/>
+
+### 15.8 Forward, Include, Redirect
+
+Это 3 основных способа перенаправления:
+
+<img alt="img_21.png" src="img_21.png" width="450"/>
+
+> Когда происходит `редирект`, браузеру возвращается `302` код
+
+Редирект более удобный и универсальный.
+
+Делается так:
+
+<img alt="img_22.png" src="img_22.png" width="800"/>
+
+### 15.9 CRUD. API Design
+
+Best-practices
+
+Например, есть сущность `employee`:
+1. Все - `/employees`
+2. Один - `/employees/{id}`
+3. Не использовать в `URL` глаголы, для определения операции использовать `Http-метод`
+4. read - `GET`, create - `POST/PUT`, update - `PUT/PATCH`, delete - `DELETE`
+5. Все, кроме `POST` - идемпотентные, `POST` - **нет!**
+
+Сайт: https://phauer.com/2015/restful-api-design-best-practices/
+
+### 15.10 CRUD. Service Layer
+
+> Есть `ResponseStatusException(HttpStatus)`, его можно кидать в контроллере
+
+> По идее, в репозитории лучше сразу вызывать метод `saveAndFlush()`, чтобы при ошибке отловить
+> ее сразу, а не при коммите (т. к. хибер делает `flush` именно при коммите)
+
+> **Так как в тестах в каждой транзакции делается не `commit` а `rollback`, то хибер не**
+> **сделает `flush`, и `update, insert, delete` методы не вызовутся !!!**
+> 
+> **В тестах после изменения бд нужно делать `flush` вручную**
+
+### 15.11 Spring MVC Testing
+
+Пример теста с отправкой `Http запросов`:
+
+<img alt="img_23.png" src="img_23.png" width="700"/>
+
+Чтобы не открывать транзакции на `view`-слое (в контроллерах), поставим настройку:
+`spring.jpa.open-in-view=false`, и сохраним `@Transactional` над методами
+
+Пример более сложного теста:
+
+<img alt="img_24.png" src="img_24.png" width="550"/>
+
+### 15.12 Type Converters
+
+В примере выше `birthDate` не сработает, так как не настроен формат даты.
+Настроить можно 3 способами:
+1. `spring.mvc.format.date=iso`
+2. Над полем `dto` поставить `@DateTimeFormat(pattern="yyyy-MM-dd")`
+3. Переопределить `WebMvcConfigurer`:
+   <img alt="img_25.png" src="img_25.png" width="800"/>
 
