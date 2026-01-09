@@ -24,7 +24,7 @@
 
 ## 2. XML-based Configuration
 ### 2.1 XML-based Configuration
-- Методы `BeanFactory`
+- Методы `BeanFactory` <br>
 ![img_1.png](imgs/p2/img_1.png)
 
 - Используется в основном реализация `ApplicationContext`
@@ -32,7 +32,7 @@
 - получить бин: `context.getBean(class)`, `context.getBean(String id/alias)` (вернет `object`), `context.getBean(id, class)` - конкретный бин класса
 - если не указать `id`, в мапе бинов `ioc` `id` будет `имя класса#номер`
 - если не указать `id/name` и сделать `getBean(class)`, то будет `exception`
-- вызывается конструктор без параметров (рефлексия)
+- вызывается конструктор без параметров (рефлексия) <br>
 ![img_3.png](imgs/p2/img_3.png)
 
 ### 2.2 Constructor injection
@@ -211,7 +211,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 
 ### 3.8 TypeFilters
 
-<img src="imgs/p3/img_8.png" width="750">
+<img src="imgs/p3/img_8.png" width="750"> <br>
 <img src="imgs/p3/img_4.png" width="750">
 
 Так Spring понимает, какие классы - бины. По умолчанию - `annotation`. То есть `@Component`, и т п. 
@@ -232,6 +232,7 @@ public class InjectBeanPostProcessor implements BeanPostProcessor, ApplicationCo
 ### 4.1 Java-based Configuration
 
 Пример кастомных фильтров в аннотации:
+
 ![img.png](imgs/p4-5/img.png)
 
 Создать `ApplicationConfiguration` контекст:
@@ -282,6 +283,7 @@ ApplicationContext ctx = new AnnotationConfigApplicationContext(ApplicationConfi
 ### 5.1 EventListeners. 1,2
 
 В Spring можно делать слушатели событий:
+
 ![img_3.png](imgs/p4-5/img_3.png)
 
 ![img_4.png](imgs/p4-5/img_4.png)
@@ -300,11 +302,11 @@ org.springframework.book:spring-boot-autoconfigure
 
 Спринг бут делает за нас это:
 
-<img alt="img.png" src="imgs/p6/img.png" width="800"/>
-
-<img alt="img_1.png" src="imgs/p6/img_1.png" width="800"/>
-
-<img alt="img_2.png" src="imgs/p6/img_2.png" width="800"/>
+<img alt="img.png" src="imgs/p6/img.png" width="600"/>
+<br>
+<img alt="img_1.png" src="imgs/p6/img_1.png" width="600"/>
+<br>
+<img alt="img_2.png" src="imgs/p6/img_2.png" width="600"/>
 
 Бины, автоматически настроенные `Spring Boot`, можно переопределить
 
@@ -333,6 +335,7 @@ org.springframework.book:spring-boot-autoconfigure
   - В `parent` есть `spring-boot-dependencies`, и в нем **куча** версий зависимостей на все случаи жизни, совместимых с этой версией `spring boot`
 
 С Spring Boot включены следующие зависимости:
+
 <img alt="img_1.png" src="imgs/p7/img_1.png" width="800"/>
 ### 6.4 `@SpringBootApplication`
 
@@ -373,16 +376,17 @@ org.springframework.book:spring-boot-autoconfigure
 пропертей, его проперти можно получить через SpringProperties.method
 
 Вообще, есть 14 вариантов задания пропертей:
+
 <img alt="img_6.png" src="imgs/p6/img_6.png" width="800"/>
 
 > Каждый из последущих имеет более высокий приоритет, чем предыдущий
 
-> `VM options` задаются через `-D`, `Program arguments` через `--`
+> `VM options` задаются через `-D`, `Program arguments` через `--` <br>
 <img alt="img_7.png" src="imgs/p6/img_7.png" width="800"/>
 
 
 ### 6.7 yaml
-В целом он удобнее, в том числе работа со списками, объектами:
+В целом он удобнее, в том числе работа со списками, объектами: <br>
 <img alt="img_9.png" src="imgs/p6/img_9.png" width="800"/>
 
 ### 6.8 `@ConfigurationProperties`
@@ -390,8 +394,8 @@ org.springframework.book:spring-boot-autoconfigure
 > Можно маппить проперти в объекты/record:
 
 <img alt="img_10.png" src="imgs/p6/img_10.png" width="800"/>
-
-<img alt="img_11.png" src="imgs/p6/img_11.png" width="800"/>
+<br>
+<img alt="img_11.png" src="imgs/p6/img_11.png" width="500"/>
 
 ## 7. Logging Starter
 
@@ -401,7 +405,7 @@ org.springframework.book:spring-boot-autoconfigure
 `logback`, можно переопределить:
 
 <img alt="img_2.png" src="imgs/p7/img_2.png" width="800"/>
-
+<br>
 <img alt="img_3.png" src="imgs/p7/img_3.png" width="800"/>
 
 Используя аннотацию `@Slf4j`, вот что под капотом:
@@ -465,7 +469,9 @@ org.springframework.book:spring-boot-autoconfigure
 ```
 
 Эти две аннотации можно заменить на `@SpringBootTest`:
+
 <img alt="img_11.png" src="imgs/p8/img_11.png" width="800"/>
+
 (`SpringBoot...Bootstraper` автоматически ищет класс `SpringBootApplication`)
 
 Пример интеграционного теста:
@@ -1196,6 +1202,6 @@ Best-practices
 Настроить можно 3 способами:
 1. `spring.mvc.format.date=iso`
 2. Над полем `dto` поставить `@DateTimeFormat(pattern="yyyy-MM-dd")`
-3. Переопределить `WebMvcConfigurer`:
+3. Переопределить `WebMvcConfigurer`:<br>
    <img alt="img_25.png" src="imgs/p15/img_25.png" width="800"/>
 
