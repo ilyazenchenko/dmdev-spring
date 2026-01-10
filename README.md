@@ -1205,3 +1205,46 @@ Best-practices
 3. Переопределить `WebMvcConfigurer`:<br>
    <img alt="img_25.png" src="imgs/p15/img_25.png" width="800"/>
 
+## 16 Thymeleaf
+
+### 16.1 Thymeleaf starter. Введение
+
+В `DS` есть дефолтный `ViewResolver`:
+
+<img alt="img.png" src="img.png" width="800"/>
+
+Его можно подменить, и когда подключаем `Thymeleaf starter`, в 
+`org.springframework.boot.autoconfigure.thymeleaf` он подменяется:
+
+<img alt="img_1.png" src="img_1.png" width="800"/>
+
+Пример:
+
+<img alt="img_2.png" src="img_2.png" width="800"/>
+
+Если объект `session/application scope`, то пишем сначала их:
+
+<img alt="img_3.png" src="img_3.png" width="600"/>
+
+### 16.2 CRUD. View Layer. Часть 1
+
+Код контроллера:
+
+<img alt="img_6.png" src="img_6.png" width="1000"/>
+
+Пример формы на `Thymeleaf`:
+
+<img alt="img_4.png" src="img_4.png" width="1200"/>
+
+И еще:
+
+<img alt="img_5.png" src="img_5.png" width="1200"/>
+
+### 16.4 Filter Query
+
+> Когда пишем форму с методом `GET`, при `submit` значения добавляются как параметры `url`
+
+<img alt="img_8.png" src="img_8.png" width="800"/>
+
+<img alt="img_7.png" src="img_7.png" width="1000"/>
+
