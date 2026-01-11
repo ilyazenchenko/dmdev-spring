@@ -1326,7 +1326,7 @@ Best-practices
 
 Проблемы и решения:
 
-<img alt="img.png" src="img.png" width="700"/>
+<img alt="img.png" src="imgs/p18/img.png" width="700"/>
 
 ### 18.2 REST. Практика
 
@@ -1341,7 +1341,7 @@ Best-practices
 
 Обработчик ошибок:
 
-<img alt="img_2.png" src="img_2.png" width="600"/>
+<img alt="img_2.png" src="imgs/p18/img_2.png" width="600"/>
 
 `@RestControllerAdvice = @ControllerAdvice + @ResponseBody` 
 
@@ -1354,19 +1354,19 @@ Best-practices
 
 Зависимость:
 
-<img alt="img_1.png" src="img_1.png" width="700"/>
+<img alt="img_1.png" src="imgs/p18/img_1.png" width="700"/>
 
 - `openapi` генерит `json` с описанием, доступен по `/v3/api-docs`
 - `swagger` генерит `UI` по `json`, доступен по `/swagger-ui/index.html`
 - можно все подробно описывать для `swagger` c помощью аннотаций
 `@Operation`, `@Parameter` итп:<br>
-  <img alt="img_4.png" src="img_4.png" width="700"/>
+  <img alt="img_4.png" src="imgs/p18/img_4.png" width="700"/>
 - в `swagger` можно и тестить запросы
 
 ### 18.4-5 Images
 
 С помощью `ResponseEntity` можно более гибко управлять ответом:
 
-<img alt="img_5.png" src="img_5.png" width="800"/>
+<img alt="img_5.png" src="imgs/p18/img_5.png" width="800"/>
 
 > Если `void`, то как `return type` ставить `ResponseEntity<?>`
