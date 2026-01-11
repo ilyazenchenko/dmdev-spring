@@ -1362,3 +1362,11 @@ Best-practices
 `@Operation`, `@Parameter` итп:<br>
   <img alt="img_4.png" src="img_4.png" width="700"/>
 - в `swagger` можно и тестить запросы
+
+### 18.4-5 Images
+
+С помощью `ResponseEntity` можно более гибко управлять ответом:
+
+<img alt="img_5.png" src="img_5.png" width="800"/>
+
+> Если `void`, то как `return type` ставить `ResponseEntity<?>`
