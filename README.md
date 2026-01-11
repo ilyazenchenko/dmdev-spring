@@ -1317,4 +1317,47 @@ Best-practices
 
 <img alt="img_17.png" src="imgs/p17/img_17.png" width="800"/>
 
-> Можно унаследовать от `ResponseEntityExceptionHandler`, есть базовая обработка
+## 18 REST
+
+### 18.1 REST. Введение 
+
+`REST` - (`REpresentational State Transfer`) - архитектурный стиль для
+распределенных гипермедиа систем
+
+Проблемы и решения:
+
+<img alt="img.png" src="img.png" width="700"/>
+
+### 18.2 REST. Практика
+
+У `@GetMapping` итп есть параметры `consumes, produces`, для `REST` по
+умолчанию `application json value`
+
+Чтобы `Spring` возврщал значение "как есть", а не пытался искать view,
+над методом нужно поставить `@ResponseBody`
+
+Чтобы не писать над каждым методом, можно поставить над классом, а можно
+просто написать `@RestController (= @Controller + @ResponseBody)`
+
+Обработчик ошибок:
+
+<img alt="img_2.png" src="img_2.png" width="600"/>
+
+`@RestControllerAdvice = @ControllerAdvice + @ResponseBody` 
+
+> Можно указать пакет для скана ошибок с `basePackages`
+
+> Можно унаследовать от `ResponseEntityExceptionHandler`, 
+> есть базовая обработка ошибок
+
+### 18.3 Swagger. API docs
+
+Зависимость:
+
+<img alt="img_1.png" src="img_1.png" width="700"/>
+
+- `openapi` генерит `json` с описанием, доступен по `/v3/api-docs`
+- `swagger` генерит `UI`, доступен по `/swagger-ui/index.html`
+- можно все подробно описывать для `swagger` c помощью аннотаций
+`@Operation`, `@Parameter` итп:<br>
+  <img alt="img_4.png" src="img_4.png" width="700"/>
