@@ -1248,3 +1248,10 @@ Best-practices
 
 <img alt="img_7.png" src="img_7.png" width="1000"/>
 
+### 16.5 Pagination. Best practices
+
+- Оборачивать дату в поле `data` `json`, а инфу об остальном - в 
+`metadata`
+- `DS` может также внедрить `Pageable`
+- Пагинацию реализовывать с помощью `Page` и `Pageable`
+
