@@ -1261,11 +1261,11 @@ Best-practices
 
 Структура:
 
-<img alt="img_9.png" src="img_9.png" width="500"/>
+<img alt="img_9.png" src="imgs/p17/img_9.png" width="500"/>
 
 Примеры аннотаций:
 
-<img alt="img_10.png" src="img_10.png" width="200"/>
+<img alt="img_10.png" src="imgs/p17/img_10.png" width="200"/>
 
 Для активации достаточно расставить над валидируемым объектом 
 аннотации и написать перед аргументом `@Valid` (спецификация `JSR`)
@@ -1280,41 +1280,41 @@ Best-practices
 Чтобы сделать свою аннотацию для, например, кросс-валидации полей,
 обязательно должна иметь эти 3 свойства:
 
-<img alt="img_11.png" src="img_11.png" width="700"/>
+<img alt="img_11.png" src="imgs/p17/img_11.png" width="700"/>
 
 Обязательно в `@Constraint` пишем валидотор
 
 Для нее делаем свой валидатор - всегда `бин` - имплементит
 `ConstraintValidator<Annotation, Type>`:
 
-<img alt="img_12.png" src="img_12.png" width="800"/>
+<img alt="img_12.png" src="imgs/p17/img_12.png" width="800"/>
 
 > `@Validated` можно поставить и над классом конфигураций, чтобы валидировать
 > проперти <br>
 > 
-> <img alt="img_13.png" src="img_13.png" width="500"/>
+> <img alt="img_13.png" src="imgs/p17/img_13.png" width="500"/>
 
 В `Spring @Validated` можно ставить groups:
 Например, если над `dto` указана группа:
 
-<img alt="img_14.png" src="img_14.png" width="350"/>
+<img alt="img_14.png" src="imgs/p17/img_14.png" width="350"/>
 
 То валидация на этой аннотации будет вызываться только если передадим
 эту же группу:
 
-<img alt="img_15.png" src="img_15.png" width="850"/>
+<img alt="img_15.png" src="imgs/p17/img_15.png" width="850"/>
 
 ### 17.3 @ControllerAdvice & @ExceptionHandler
 
 Чтобы самостоятельно обрабатывать исключения, можем добавить свой 
 `handleExceptionResolver` в `DS`, например, методом контроллера:
 
-<img alt="img_16.png" src="img_16.png" width="800"/>
+<img alt="img_16.png" src="imgs/p17/img_16.png" width="800"/>
 
 > В аргументы также можно внедрять разные штуки
 
 Но он будет только на котроллер. Чтобы сделать глобальным:
 
-<img alt="img_17.png" src="img_17.png" width="800"/>
+<img alt="img_17.png" src="imgs/p17/img_17.png" width="800"/>
 
 > Можно унаследовать от `ResponseEntityExceptionHandler`, есть базовая обработка
