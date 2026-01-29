@@ -1370,3 +1370,54 @@ Best-practices
 <img alt="img_5.png" src="imgs/p18/img_5.png" width="800"/>
 
 > Если `void`, то как `return type` ставить `ResponseEntity<?>`
+
+## 19. Security starter
+
+### 19.1 Введение
+
+База:
+
+![img.png](img.png)
+
+Стандартное `servlet` приложение:
+
+![img_1.png](img_1.png)
+
+`Spring`:
+
+![img_2.png](img_2.png)
+
+> `DelegatingFilterProxy` - не бин, фильтр. `FilterChainProxy` - бин
+
+### 19.2 Authentication architecture
+
+Схема:
+
+<img alt="img_3.png" src="img_3.png" width="854"/>
+
+<img alt="img_4.png" src="img_4.png" width="797"/>
+
+> По умолчанию вход по логину и паролю, и в куках сохраняется
+> `JSEESIONID`:
+> 
+> ![img_5.png](img_5.png)
+> 
+> На сервере мапа. Если удалить в браузе - нужно перелогиниваться
+
+### 19.3 DaoAuthenticationProvider
+
+Самый простой, довольно распространенный. То есть
+пользователи хранятся в бд.
+
+Чтобы его активировать, нужно реализовать в проекте
+`UserDetailsService` и его метод `loadUserByUsername(String username)`
+
+> Если лень делать свой `UserDetails` есть готовый 
+> от `Spring`, например, `User`:
+> 
+> `User(username, password, List<GrantedAuthority>`)
+
+Также для прав либо использовать `SimpleGrantedAuthority`,
+либо реализовать свою `GrantedAuthority`
+
+Тогда спринг уже не будет делать своего пользователя
