@@ -1421,3 +1421,95 @@ Best-practices
 либо реализовать свою `GrantedAuthority`
 
 Тогда спринг уже не будет делать своего пользователя
+
+### 19.4 Form Login
+
+Дефолтный `SecurityFilterChain`:
+
+<img alt="img_6.png" src="img_6.png" width="900"/>
+
+Переопределяем (дефолтный отключается):
+
+<img alt="img_7.png" src="img_7.png" width="731"/>
+
+> Чтобы `Spring AuthManager` нашел поля формы, они обязательно
+> должны называться `username` и `password`
+
+Логин и пароль проверяет `UsernamePasswordAuthenticationFilter`
+(первый из рассматриваемых `AuthenticationFilters`):
+
+<img alt="img_8.png" src="img_8.png" width="900"/>
+
+`WebSecurityConfigurerAdapter is deprecated`:
+```java
+@Bean
+public SecurityFilterChain filterChain(HttpSecurity http) {
+  // build as usual in WebSecurityConfigurerAdapter.configure
+  return http.build();
+}
+```
+
+### 19.5 HTTP Basic Authentication
+
+Следующая реализация `AuthenticationFilter` - 
+`HttpBacisAuthenticationFilter`.
+
+`HttpBasicAuthentication`:
+
+![img_9.png](img_9.png)
+
+Реализация:
+
+<img alt="img_10.png" src="img_10.png" width="632"/>
+
+### 19.6 PasswordEncoder
+
+В бд пароли хранятся зашифрованными: `{алгоритм}шифр`.
+
+`{noop}пароль` - без шифрования и тп
+
+У `PasswordEncoder` есть методы 
+`encode(password)` и `matches(first, sec)` 
+
+По умолчанию `BCrypt`
+
+Бин:
+
+<img alt="img_11.png" src="img_11.png" width="700"/>
+
+### 19.7 Logout
+
+За `logout` отвечает `LogoutFilter`. В частности, удаляет `JSESSIONID` из мапы.
+
+
+![img_13.png](img_13.png)
+
+### 19.8 Authorization architecture
+
+За авторизацию отвечает `AuthorizationFilter`. Он использует
+`AuthorizationManager`:
+
+![img_12.png](img_12.png)
+
+`Spring` использует `RequestMatcherDelegatingAuthorizationManager` - он
+делегирует проверку другим
+
+Настройка:
+
+<img alt="img_14.png" src="img_14.png" width="900"/>
+
+> Когда `hasRole`, нужно добавлять `ROLE_`, когда `hasAuthority` - нет
+
+### 19.9 Method Security
+
+Включаем `@EnableMethodSecurity` (у нее `prePostEnabled=true` по умолчанию)
+
+Можно ставить такие анно:
+
+![img_15.png](img_15.png)
+
+> Не только над контроллером, но и над сервисом.
+
+Над коллекциями можно дополнительно фильтровать:
+
+![img_16.png](img_16.png)
