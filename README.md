@@ -1513,3 +1513,47 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 Над коллекциями можно дополнительно фильтровать:
 
 ![img_16.png](img_16.png)
+
+### 19.10 Access to authenticated user
+
+Получить пользователя из контекста в коде:
+
+<img alt="img_17.png" src="img_17.png" width="900"/>
+
+Декларативно в методах:
+
+<img alt="img_18.png" src="img_18.png" width="900"/>
+
+### 19.11 CSRF Filter
+
+Общая архитектура `security`:
+
+<img alt="img_19.png" src="img_19.png" width="1000"/>
+
+`CSRF`:
+
+<img alt="img_20.png" src="img_20.png" width="964"/>
+
+То есть, другие сайты могут имитировать наши формы и отправлять их
+на наш сервер, а браузер клиента будет подставлять в них куки, например, `JSESSIONID`
+
+2 способа решения:
+
+![img_21.png](img_21.png)
+
+`Spring`:
+
+![img_22.png](img_22.png)
+
+Решение: подставляем в форму `hidden input` с токеном `csrf`
+и также валидируем его на сервере.
+
+**Когда** – когда используем браузер и куки.
+
+Руками:
+
+![img_23.png](img_23.png)
+
+Но если `action` от `thymeleaf`, то сам подставит:
+
+![img_24.png](img_24.png)
