@@ -1628,3 +1628,21 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 В ней возвращаем `Proxy` из `UserDetails` и `OidcUser`
 (просто `UserDetails` возвращать не можем, так как должен
 `extends OidcUser`).
+
+### 19.16 JWT. Json Web Token
+
+В `OpenIDConnect` помимо `Access/Refresh tokens` приходит `JWT` - `id token`.
+
+Cостоит из 3 частей:
+
+1. `Header` - краткая метаинфа о токене - `base64`
+2. `Payload` - инфа - `base64`
+3. `Signature` - подпись - `Header + Payload + SecretKeyHash`, с помощью публичного ключа
+можно удостовериться что токен валидный
+
+### 19.17 Swagger Authorization
+
+<img alt="img_37.png" src="img_37.png" width="900"/>
+
+<img alt="img_38.png" src="img_38.png" width="900"/>
+
