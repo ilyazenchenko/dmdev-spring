@@ -1377,15 +1377,15 @@ Best-practices
 
 База:
 
-![img.png](img.png)
+![img.png](imgs/p19/img.png)
 
 Стандартное `servlet` приложение:
 
-![img_1.png](img_1.png)
+![img_1.png](imgs/p19/img_1.png)
 
 `Spring`:
 
-![img_2.png](img_2.png)
+![img_2.png](imgs/p19/img_2.png)
 
 > `DelegatingFilterProxy` - не бин, фильтр. `FilterChainProxy` - бин
 
@@ -1393,14 +1393,14 @@ Best-practices
 
 Схема:
 
-<img alt="img_3.png" src="img_3.png" width="854"/>
+<img alt="img_3.png" src="imgs/p19/img_3.png" width="854"/>
 
-<img alt="img_4.png" src="img_4.png" width="797"/>
+<img alt="img_4.png" src="imgs/p19/img_4.png" width="797"/>
 
 > По умолчанию вход по логину и паролю, и в куках сохраняется
 > `JSEESIONID`:
 > 
-> ![img_5.png](img_5.png)
+> ![img_5.png](imgs/p19/img_5.png)
 > 
 > На сервере мапа. Если удалить в браузе - нужно перелогиниваться
 
@@ -1426,11 +1426,11 @@ Best-practices
 
 Дефолтный `SecurityFilterChain`:
 
-<img alt="img_6.png" src="img_6.png" width="900"/>
+<img alt="img_6.png" src="imgs/p19/img_6.png" width="900"/>
 
 Переопределяем (дефолтный отключается):
 
-<img alt="img_7.png" src="img_7.png" width="731"/>
+<img alt="img_7.png" src="imgs/p19/img_7.png" width="731"/>
 
 > Чтобы `Spring AuthManager` нашел поля формы, они обязательно
 > должны называться `username` и `password`
@@ -1438,7 +1438,7 @@ Best-practices
 Логин и пароль проверяет `UsernamePasswordAuthenticationFilter`
 (первый из рассматриваемых `AuthenticationFilters`):
 
-<img alt="img_8.png" src="img_8.png" width="900"/>
+<img alt="img_8.png" src="imgs/p19/img_8.png" width="900"/>
 
 `WebSecurityConfigurerAdapter is deprecated`:
 ```java
@@ -1456,11 +1456,11 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 
 `HttpBasicAuthentication`:
 
-![img_9.png](img_9.png)
+![img_9.png](imgs/p19/img_9.png)
 
 Реализация:
 
-<img alt="img_10.png" src="img_10.png" width="632"/>
+<img alt="img_10.png" src="imgs/p19/img_10.png" width="632"/>
 
 ### 19.6 PasswordEncoder
 
@@ -1475,28 +1475,28 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 
 Бин:
 
-<img alt="img_11.png" src="img_11.png" width="700"/>
+<img alt="img_11.png" src="imgs/p19/img_11.png" width="700"/>
 
 ### 19.7 Logout
 
 За `logout` отвечает `LogoutFilter`. В частности, удаляет `JSESSIONID` из мапы.
 
 
-![img_13.png](img_13.png)
+![img_13.png](imgs/p19/img_13.png)
 
 ### 19.8 Authorization architecture
 
 За авторизацию отвечает `AuthorizationFilter`. Он использует
 `AuthorizationManager`:
 
-![img_12.png](img_12.png)
+![img_12.png](imgs/p19/img_12.png)
 
 `Spring` использует `RequestMatcherDelegatingAuthorizationManager` - он
 делегирует проверку другим
 
 Настройка:
 
-<img alt="img_14.png" src="img_14.png" width="900"/>
+<img alt="img_14.png" src="imgs/p19/img_14.png" width="900"/>
 
 > Когда `hasRole`, нужно добавлять `ROLE_`, когда `hasAuthority` - нет
 > 
@@ -1509,44 +1509,44 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 
 Можно ставить такие анно:
 
-![img_15.png](img_15.png)
+![img_15.png](imgs/p19/img_15.png)
 
 > Не только над контроллером, но и над сервисом.
 
 Над коллекциями можно дополнительно фильтровать:
 
-![img_16.png](img_16.png)
+![img_16.png](imgs/p19/img_16.png)
 
 ### 19.10 Access to authenticated user
 
 Получить пользователя из контекста в коде:
 
-<img alt="img_17.png" src="img_17.png" width="900"/>
+<img alt="img_17.png" src="imgs/p19/img_17.png" width="900"/>
 
 Декларативно в методах:
 
-<img alt="img_18.png" src="img_18.png" width="900"/>
+<img alt="img_18.png" src="imgs/p19/img_18.png" width="900"/>
 
 ### 19.11 CSRF Filter
 
 Общая архитектура `security`:
 
-<img alt="img_19.png" src="img_19.png" width="1000"/>
+<img alt="img_19.png" src="imgs/p19/img_19.png" width="1000"/>
 
 `CSRF`:
 
-<img alt="img_20.png" src="img_20.png" width="964"/>
+<img alt="img_20.png" src="imgs/p19/img_20.png" width="964"/>
 
 То есть, другие сайты могут имитировать наши формы и отправлять их
 на наш сервер, а браузер клиента будет подставлять в них куки, например, `JSESSIONID`
 
 2 способа решения:
 
-![img_21.png](img_21.png)
+![img_21.png](imgs/p19/img_21.png)
 
 `Spring`:
 
-![img_22.png](img_22.png)
+![img_22.png](imgs/p19/img_22.png)
 
 Решение: подставляем в форму `hidden input` с токеном `csrf`
 и также валидируем его на сервере.
@@ -1555,11 +1555,11 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 
 Руками:
 
-![img_23.png](img_23.png)
+![img_23.png](imgs/p19/img_23.png)
 
 Но если `action` от `thymeleaf`, то сам подставит:
 
-![img_24.png](img_24.png)
+![img_24.png](imgs/p19/img_24.png)
 
 ### 19.12 Security Testing
 
@@ -1569,25 +1569,25 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 
 Вариант 1:
 
-![img_25.png](img_25.png)
+![img_25.png](imgs/p19/img_25.png)
 
 Вариант 2:
 
-![img_26.png](img_26.png)
+![img_26.png](imgs/p19/img_26.png)
 
 Вариант 3:
 
-![img_27.png](img_27.png)
+![img_27.png](imgs/p19/img_27.png)
 
 ### 19.13 OAuth2. Теория
 
 Принцип единой точки входа для различных приложений:
 
-<img alt="img_28.png" src="img_28.png" width="864"/>
+<img alt="img_28.png" src="imgs/p19/img_28.png" width="864"/>
 
 Как поддерживать:
 
-<img alt="img_29.png" src="img_29.png" width="895"/>
+<img alt="img_29.png" src="imgs/p19/img_29.png" width="895"/>
 
 > Обычный `OAuth2` возвращает нам только права пользователя
 > (только авторизация), `Open ID Connect - OIDC` - надстройка
@@ -1598,19 +1598,19 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 
 На `Google Cloud` создаем клиента:
 
-![img_31.png](img_31.png)
+![img_31.png](imgs/p19/img_31.png)
 
 В `properties` указываем:
 
-![img_32.png](img_32.png)
+![img_32.png](imgs/p19/img_32.png)
 
 Можем указать, так как `Google` есть в `Common providers`:
 
-![img_33.png](img_33.png)
+![img_33.png](imgs/p19/img_33.png)
 
 Указываем логиин с помощью `OAuth2`:
 
-![img_34.png](img_34.png)
+![img_34.png](imgs/p19/img_34.png)
 
 ### 19.15 OAuth 2.0. Authentication Principle
 
@@ -1618,12 +1618,12 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 с нашим UserDetails, поэтому ошибка. Чтобы совместить, нужно реализовать
 `OAuth2UserService`:
 
-<img alt="img_35.png" src="img_35.png" width="885"/>
+<img alt="img_35.png" src="imgs/p19/img_35.png" width="885"/>
 
 Добавляем `userInfoEndpoint`, и делаем реализацию 
 `oidcUserService`:
 
-<img alt="img_36.png" src="img_36.png" width="900"/>
+<img alt="img_36.png" src="imgs/p19/img_36.png" width="900"/>
 
 В ней возвращаем `Proxy` из `UserDetails` и `OidcUser`
 (просто `UserDetails` возвращать не можем, так как должен
@@ -1642,7 +1642,7 @@ Cостоит из 3 частей:
 
 ### 19.17 Swagger Authorization
 
-<img alt="img_37.png" src="img_37.png" width="900"/>
+<img alt="img_37.png" src="imgs/p19/img_37.png" width="900"/>
 
-<img alt="img_38.png" src="img_38.png" width="900"/>
+<img alt="img_38.png" src="imgs/p19/img_38.png" width="900"/>
 
