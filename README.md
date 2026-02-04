@@ -1499,6 +1499,9 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 <img alt="img_14.png" src="img_14.png" width="900"/>
 
 > Когда `hasRole`, нужно добавлять `ROLE_`, когда `hasAuthority` - нет
+> 
+> И вообще, видимо, использовать `authorities` - удобнее, потому что
+> не надо подставлять `ROLE_`
 
 ### 19.9 Method Security
 
@@ -1557,3 +1560,71 @@ public SecurityFilterChain filterChain(HttpSecurity http) {
 Но если `action` от `thymeleaf`, то сам подставит:
 
 ![img_24.png](img_24.png)
+
+### 19.12 Security Testing
+
+- Подключить зависимость `Spring security test`
+
+Добавить пользователя в тест (в запрос):
+
+Вариант 1:
+
+![img_25.png](img_25.png)
+
+Вариант 2:
+
+![img_26.png](img_26.png)
+
+Вариант 3:
+
+![img_27.png](img_27.png)
+
+### 19.13 OAuth2. Теория
+
+Принцип единой точки входа для различных приложений:
+
+<img alt="img_28.png" src="img_28.png" width="864"/>
+
+Как поддерживать:
+
+<img alt="img_29.png" src="img_29.png" width="895"/>
+
+> Обычный `OAuth2` возвращает нам только права пользователя
+> (только авторизация), `Open ID Connect - OIDC` - надстройка
+> над `OAuth2`, помимо прав возвращает и данные о пользователе
+> (авторизация + аутентификация)
+
+### 19.14 OAuth2. Практика
+
+На `Google Cloud` создаем клиента:
+
+![img_31.png](img_31.png)
+
+В `properties` указываем:
+
+![img_32.png](img_32.png)
+
+Можем указать, так как `Google` есть в `Common providers`:
+
+![img_33.png](img_33.png)
+
+Указываем логиин с помощью `OAuth2`:
+
+![img_34.png](img_34.png)
+
+### 19.15 OAuth 2.0. Authentication Principle
+
+В данный момент юзер, приходящий из `OAuth2`, не совместим
+с нашим UserDetails, поэтому ошибка. Чтобы совместить, нужно реализовать
+`OAuth2UserService`:
+
+<img alt="img_35.png" src="img_35.png" width="885"/>
+
+Добавляем `userInfoEndpoint`, и делаем реализацию 
+`oidcUserService`:
+
+<img alt="img_36.png" src="img_36.png" width="900"/>
+
+В ней возвращаем `Proxy` из `UserDetails` и `OidcUser`
+(просто `UserDetails` возвращать не можем, так как должен
+`extends OidcUser`).
