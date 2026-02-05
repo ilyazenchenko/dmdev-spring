@@ -1665,3 +1665,73 @@ Cостоит из 3 частей:
 
 Тоже можно
 
+## 21 Spring AOP Starter
+
+### 21.1 AOP Starter. Введение
+
+Метод может разрастись из-за повторяющейся функциональности:
+
+![img.png](imgs/p21/img.png)
+
+Схема:
+
+![img_1.png](imgs/p21/img_1.png)
+
+### 21.2 AOP. Pointcut
+
+`Pointcut - срезы` - представляют собой что-то вроде регулярных выражений, 
+который возвращают `true` либо `false`, т.е. внедрять сквозную логику или нет.
+
+<img alt="img_3.png" src="imgs/p21/img_3.png" width="794"/>
+
+<img alt="img_4.png" src="imgs/p21/img_4.png" width="900"/>
+
+<img alt="img_5.png" src="imgs/p21/img_5.png" width="891"/>
+
+<img alt="img_6.png" src="imgs/p21/img_6.png" width="900"/>
+
+<img alt="img_7.png" src="imgs/p21/img_7.png" width="900"/>
+
+### 21.3 AOP. @Before Advice
+
+Добавляет функциональность перед методом:
+
+<img alt="img_8.png" src="imgs/p21/img_8.png" width="857"/>
+
+Схема:
+
+<img alt="img_9.png" src="imgs/p21/img_9.png" width="800"/>
+
+### 21.4 AOP. JoinPoint. Params
+
+`JoinPoint` - инфа о вызове.
+
+Получить аргументы:
+
+![img_11.png](imgs/p21/img_11.png)
+
+> Если нужен JoinPoint - его всегда внедрять первым
+
+### 21.5 AOP. @After Advices
+
+Схема:
+
+![img_12.png](imgs/p21/img_12.png)
+
+Пример:
+
+<img alt="img_13.png" src="imgs/p21/img_13.png" width="900"/>
+
+### 21.6 AOP. @Around Advice
+
+Вокруг метода. Вызываем метод вручную с помощью `proceedingJoinPoint.proceed()`
+
+<img alt="img_14.png" src="imgs/p21/img_14.png" width="900"/>
+
+### 21.7 AOP. Best Practices
+
+1. Combine different `Pointcut` types
+2. Move common `Pointcuts` to separate `Aspect`
+3. Don't use `@Around` advice everywhere
+4. Separate `Pointcuts` by business logic
+5. `Aspects` order
