@@ -1646,3 +1646,23 @@ Cостоит из 3 частей:
 
 <img alt="img_38.png" src="imgs/p19/img_38.png" width="900"/>
 
+## 18. i18n & l10n
+
+### 18.1 i18n. MessageSource
+
+Добавим в `properties` `spring.messages.basename=messages` (дефолт)
+
+Создаем `messages.properties` - будет использоваться по дефолту
+И `messages_<LANGUAGE>_<COUNTRY (опционально)>.properties`
+
+![img.png](img.png)
+
+Можно получить с `messageSource.getMessage()`
+
+![img_1.png](img_1.png)
+
+### 18.2 i18n. Thymeleaf
+
+Тоже можно
+
+### 19. x
