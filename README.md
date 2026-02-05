@@ -1735,3 +1735,30 @@ Cостоит из 3 частей:
 3. Don't use `@Around` advice everywhere
 4. Separate `Pointcuts` by business logic
 5. `Aspects` order
+
+## 22 Заключение
+
+### 22.1 Custom Spring Boot Starter
+
+1. Делаем пропертисы:
+
+![img.png](imgs/p22/img.png)
+
+2. Делаем auto configuration:
+
+![img_1.png](imgs/p22/img_1.png)
+
+3. **В авто конфигурации** делаем необходимые для стартера бины 
+именно с помощью аннотации `@Bean`:
+
+![img_2.png](imgs/p22/img_2.png)
+
+Можно использовать плагин `gradle/maven` для автогенерации
+пояснений к пропертисам
+
+> В стартерах не рекомендуется (нельзя?) использовать
+> `@ComponentScan` и `@SpringBootApplication` соотв, поэтому 
+> никаких `@Component` и тп
+
+Чтобы можно было переопределить бин в приле, написать 
+`@ConditionalOnMissingBean`
